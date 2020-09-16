@@ -1,6 +1,9 @@
-﻿using Raylib_cs;
+﻿using Merlin.Game.Exceptions;
+using Raylib_cs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace Merlin.Game
@@ -8,27 +11,52 @@ namespace Merlin.Game
     public class Animation : IDisposable
     {
 
-        private Texture2D texture;// = Raylib.LoadTexture("resources/raylib-cs_logo.png");
-        private String resource;
+        private Texture2D texture = Raylib.LoadTexture("resources/raylib-cs_logo.png");
+        private string resource;
         private int width;
         private int height;
-        private int speed;
+        private int frameDuration;
         private int rotation;
         private bool looping = true;
         private bool pingPong = false;
-        private bool isReturning = false;
+        private bool isRunning = false;
+        //private bool isDecrementing = false;
 
         private bool isFlipped = false;
         private bool disposedValue;
 
+        private int currentFrame = 0;
+        private int framesCount;
+        private int time = 0;
 
-        public Animation(String resource, int width, int height, int speed)
+        private int nextFrameStep = 1;
+
+        private Rectangle[] frames;
+
+        public Animation(String resource, int width, int height, int frameDuration)
         {
             this.resource = resource;
             this.width = width;
             this.height = height;
-            this.speed = speed;
+            this.frameDuration = frameDuration;
+
             texture = Raylib.LoadTexture(resource);
+
+            if (texture.height != height || texture.width % width != 0)
+            {
+                throw new SpritesheetMismatchException("Width of the spritesheet has to be divisible " +
+                    "by the frame width and heights have to match.");
+            }
+
+            framesCount = texture.width / width;
+
+            frames = new Rectangle[framesCount];
+
+            for (int i = 0; i < framesCount; i++)
+            {
+                frames[i] = new Rectangle(i * width, 0, width, height);
+            }
+
         }
 
         public Animation(String resource, int width, int height) : this(resource, width, height, 10)
@@ -53,8 +81,7 @@ namespace Merlin.Game
 
         public int GetDuration()
         {
-            throw new NotImplementedException();
-            //return this.duration;
+            return this.frameDuration;
         }
 
         public int GetRotation()
@@ -62,13 +89,45 @@ namespace Merlin.Game
             return this.rotation;
         }
 
-        public void Render(int x, int y)
+        public void Draw(int x, int y)
         {
+            if (isRunning)
+            {
+
+                if (time++ >= frameDuration)
+                {
+                    currentFrame += nextFrameStep;
+                    time = 0;
+                }
+
+                if (currentFrame >= framesCount)
+                {
+                    if (pingPong)
+                    {
+                        currentFrame = framesCount - 1;
+                        nextFrameStep = -1;
+                    }
+                    else
+                    {
+                        currentFrame = 0;
+                    }
+
+
+                }
+                else if (currentFrame < 0)
+                {
+                    currentFrame = 0;
+                    nextFrameStep = 1;
+                }
+            }
+
             //getslickanimation().draw(x, y);
+            Raylib.DrawTextureRec(texture, frames[currentFrame], new Vector2(x, y), Raylib_cs.Color.WHITE);
+
             throw new NotImplementedException();
         }
 
-        public void Render(int x, int y, int width, int height)
+        public void Draw(int x, int y, int width, int height)
         {
             //getSlickAnimation().draw(x, y, width, height);
             throw new NotImplementedException();
@@ -87,37 +146,24 @@ namespace Merlin.Game
 
         public void Stop()
         {
-            //getSlickAnimation();
-            //if (this.slickAnimation != null)
-            //{
-            //    getSlickAnimation().stop();
-            //}
+            isRunning = false;
         }
 
         public void Start()
         {
-            //if (this.slickAnimation != null)
-            //{
-            //    getSlickAnimation().start();
-            //}
+            isRunning = true;
         }
 
         public void SetPingPong(Boolean pingPong)
         {
-            //this.pingPong = pingPong;
-            //if (this.slickAnimation != null)
-            //{
-            //    this.slickAnimation.setPingPong(pingPong);
-            //}
+            this.pingPong = pingPong;
+            this.currentFrame = 0;
+            this.nextFrameStep = 1;
         }
 
-        public void SetLooping(Boolean looping)
+        public void SetLooping(bool looping)
         {
-            //this.looping = looping;
-            //if (this.slickAnimation != null)
-            //{
-            //    this.slickAnimation.setLooping(looping);
-            //}
+            this.looping = looping;
         }
 
         public void StopAt(int frameIndex)
@@ -130,6 +176,12 @@ namespace Merlin.Game
 
         public void SetCurrentFrame(int frameIndex)
         {
+            if (currentFrame < framesCount && currentFrame > 0)
+            {
+                currentFrame = frameIndex;
+                time = 0;
+
+            }
             //if (this.slickAnimation != null)
             //{
             //    this.slickAnimation.setCurrentFrame(frameIndex);
@@ -138,33 +190,21 @@ namespace Merlin.Game
 
         public int GetCurrentFrame()
         {
-            //if (this.slickAnimation != null)
-            //{
-            //    return this.slickAnimation.getFrame();
-            //}
-            return -1;
+            return currentFrame;
         }
 
         public int GetFrameCount()
         {
-            //if (this.slickAnimation != null)
-            //{
-            //    return this.slickAnimation.getFrameCount();
-            //}
-            return -1;
+            return framesCount;
         }
 
         public void SetDuration(int duration)
         {
-            if (duration > 0)
-            {
-                this.duration = duration;
-            }
+            this.frameDuration = duration;
         }
 
         public void SetRotation(int angle)
         {
-            this.rotation = angle % 360;
             //this.rotation = (angle % 360);
             //org.newdawn.slick.Animation newAnimation = new org.newdawn.slick.Animation();
             //for (int i = 0; i < getSlickAnimation().getFrameCount(); i++)
@@ -217,19 +257,11 @@ namespace Merlin.Game
 
         public void FlipAnimation()
         {
-            isFlipped = !isFlipped;
-            //Raylib.
-            //org.newdawn.slick.Animation slickAnimation = new org.newdawn.slick.Animation();
-            //org.newdawn.slick.Animation oldAnimation = getSlickAnimation();
-            //for (int i = 0; i < oldAnimation.getFrameCount(); i++)
-            //{
-            //    slickAnimation.addFrame(oldAnimation.getImage(i).getFlippedCopy(true, false), duration);
-            //}
-
-            ////this.slickAnimation = slickAnimation;
-            //slickAnimation.restart();
-            //slickAnimation.setCurrentFrame(oldAnimation.getFrame());
-            //slickAnimation.update(0);
+            isFlipped = true;
+            for (int i = 0; i < framesCount; i++)
+            {
+                frames[i].width = -frames[i].width;
+            }
 
         }
 
