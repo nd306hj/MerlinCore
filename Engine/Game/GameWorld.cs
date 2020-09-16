@@ -267,24 +267,7 @@ namespace Merlin.Game
                 //graphics.translate(getXOffset(gc), getYOffset(gc));
             }
             RenderMap();
-            if (this.debugGraphics)
-            {
-                //graphics.setColor(org.newdawn.slick.Color.green);
 
-                int width = this.tiledMap.Width;
-                int height = this.tiledMap.Height;
-                for (int x = 0; x < width; x++)
-                {
-                    for (int y = 0; y < height; y++)
-                    {
-                        if (IsWall(x, y))
-                        {
-                            throw new NotImplementedException();
-                            //graphics.fillRect(x * this.tiledMap.getTileWidth(), y * this.tiledMap.getTileHeight(), this.tiledMap.getTileWidth(), this.tiledMap.getTileHeight());
-                        }
-                    }
-                }
-            }
             RenderActors(this.actors);
             RenderActors(this.triggers);
             if (this.centeredOn != null)
@@ -299,22 +282,29 @@ namespace Merlin.Game
 
         private void RenderMap()
         {
-            int width = this.tiledMap.Width;
-            int height = this.tiledMap.Height;
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    if (IsWall(x, y))
-                    {
-                        //throw new NotImplementedException();
 
-                        //graphics.fillRect(x * this.tiledMap.getTileWidth(), y * this.tiledMap.getTileHeight(), this.tiledMap.getTileWidth(), this.tiledMap.getTileHeight());
-                        Raylib.DrawRectangle(x * this.tiledMap.TileWidth, y * this.tiledMap.TileHeight,
-                            this.tiledMap.TileWidth, this.tiledMap.TileHeight, Raylib_cs.Color.WHITE);
+            if (this.debugGraphics)
+            {
+                int width = this.tiledMap.Width;
+                int height = this.tiledMap.Height;
+
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        if (IsWall(x, y))
+                        {
+                            //throw new NotImplementedException();
+
+                            //graphics.fillRect(x * this.tiledMap.getTileWidth(), y * this.tiledMap.getTileHeight(), this.tiledMap.getTileWidth(), this.tiledMap.getTileHeight());
+                            Raylib.DrawRectangle(x * this.tiledMap.TileWidth, y * this.tiledMap.TileHeight,
+                                this.tiledMap.TileWidth, this.tiledMap.TileHeight, Raylib_cs.Color.WHITE);
+                        }
                     }
                 }
             }
+
+            this.tiledMap.RenderMapBackground();
         }
 
 
@@ -327,7 +317,7 @@ namespace Merlin.Game
                 Animation animation = actor.GetAnimation();
                 if (animation != null)
                 {
-                    animation.Draw(actor.GetX(), actor.GetY());
+                    animation.Render(actor.GetX(), actor.GetY());
                 }
                 else
                 {
@@ -380,7 +370,7 @@ namespace Merlin.Game
                 //graphics.fillRect(0.0F, gc.GetHeight() - 24, gc.GetWidth(), gc.GetHeight());
                 foreach (Item item in this.inventory)
                 {
-                    item.GetAnimation().Draw(x, gc.GetHeight() - 20, 16, 16);
+                    item.GetAnimation().Render(x, gc.GetHeight() - 20, 16, 16);
                     x += item.GetWidth() + 4;
                 }
 

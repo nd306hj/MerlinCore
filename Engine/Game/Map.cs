@@ -20,12 +20,15 @@ namespace Merlin.Game
 
         private BackgroundTile[,] backgroundTiles;
 
+        private Rectangle[] tilesetPositions;
+
         private Texture2D backgroundTexture;
         private bool disposedValue;
 
         public Map(string mapResource)
         {
             TmxMap tiledMap = new TmxMap(mapResource);
+            //tiledMap.
             Width = tiledMap.Width;
             Height = tiledMap.Height;
             //TileWidth = tiledMap.Width;
@@ -33,6 +36,7 @@ namespace Merlin.Game
             TileWidth = 16;
             TileHeight = 16;
             LoadWalls(tiledMap);
+            LoadBackground(tiledMap);
             //LoadBackground(tiledMap);
             //Image image = Raylib.LoadImage("");
             //image.
@@ -48,15 +52,31 @@ namespace Merlin.Game
             {
                 for (int y = 0; y < tiledMap.Height; y++)
                 {
-                    walls[x,y] = tiledMap.Layers["walls"].Tiles.Single(tile => tile.X == x && tile.Y == y).Gid;
+                    walls[x, y] = tiledMap.Layers["walls"].Tiles.Single(tile => tile.X == x && tile.Y == y).Gid;
                 }
             }
         }
 
         private void LoadBackground(TmxMap tiledMap)
         {
+            backgroundTexture = Raylib.LoadTexture(tiledMap.Tilesets[0].Image.Source);
 
-            backgroundTexture = Raylib.LoadTexture(tiledMap.ImageLayers[0].Image.Source);
+            //backgroundTexture = Raylib.LoadTexture(tiledMap.ImageLayers[0].Image.Source);
+
+            int tileXCount = (int)tiledMap.Tilesets[0].Image.Width / TileWidth;
+            int tileYCount = (int)tiledMap.Tilesets[0].Image.Height / TileHeight;
+
+            tilesetPositions = new Rectangle[tileXCount * tileYCount + 1];
+
+            int i = 1;
+
+            for (int y = 0; y < tileYCount; y++)
+            {
+                for (int x = 0; x < tileXCount; x++)
+                {
+                    tilesetPositions[i++] = new Rectangle(x * TileWidth, y * TileHeight, TileWidth, TileHeight);
+                }
+            }
 
             backgroundTiles = new BackgroundTile[tiledMap.Width, tiledMap.Height];
 
@@ -66,6 +86,21 @@ namespace Merlin.Game
                 {
                     backgroundTiles[x, y] = new BackgroundTile(x * tiledMap.TileWidth, y * tiledMap.TileHeight,
                         tiledMap.Layers["background"].Tiles.Single(tile => tile.X == x && tile.Y == y).Gid);
+                }
+            }
+        }
+
+        public void RenderMapBackground()
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    BackgroundTile tile = backgroundTiles[x, y];
+                    if (tile.TileCode != 0)
+                    {
+                        Raylib.DrawTextureRec(backgroundTexture, tilesetPositions[tile.TileCode], tile.Position, Raylib_cs.Color.WHITE);
+                    }
                 }
             }
         }
