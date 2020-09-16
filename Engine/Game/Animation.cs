@@ -8,24 +8,27 @@ namespace Merlin.Game
     public class Animation : IDisposable
     {
 
-        private Texture2D texture = Raylib.LoadTexture("resources/raylib-cs_logo.png");
+        private Texture2D texture;// = Raylib.LoadTexture("resources/raylib-cs_logo.png");
         private String resource;
         private int width;
         private int height;
-        private int duration;
+        private int speed;
         private int rotation;
-        private Boolean looping = true;
-        private Boolean pingPong = false;
+        private bool looping = true;
+        private bool pingPong = false;
+        private bool isReturning = false;
 
-        private Boolean isFlipped = false;
+        private bool isFlipped = false;
         private bool disposedValue;
 
-        public Animation(String resource, int width, int height, int duration)
+
+        public Animation(String resource, int width, int height, int speed)
         {
             this.resource = resource;
             this.width = width;
             this.height = height;
-            this.duration = duration;
+            this.speed = speed;
+            texture = Raylib.LoadTexture(resource);
         }
 
         public Animation(String resource, int width, int height) : this(resource, width, height, 10)
@@ -50,7 +53,8 @@ namespace Merlin.Game
 
         public int GetDuration()
         {
-            return this.duration;
+            throw new NotImplementedException();
+            //return this.duration;
         }
 
         public int GetRotation()
@@ -58,13 +62,13 @@ namespace Merlin.Game
             return this.rotation;
         }
 
-        public void Draw(int x, int y)
+        public void Render(int x, int y)
         {
             //getslickanimation().draw(x, y);
             throw new NotImplementedException();
         }
 
-        public void Draw(int x, int y, int width, int height)
+        public void Render(int x, int y, int width, int height)
         {
             //getSlickAnimation().draw(x, y, width, height);
             throw new NotImplementedException();
@@ -152,18 +156,15 @@ namespace Merlin.Game
 
         public void SetDuration(int duration)
         {
-            //this.duration = duration;
-            //if (this.slickAnimation != null)
-            //{
-            //    for (int i = 0; i < this.slickAnimation.getFrameCount(); i++)
-            //    {
-            //        this.slickAnimation.setDuration(i, duration);
-            //    }
-            //}
+            if (duration > 0)
+            {
+                this.duration = duration;
+            }
         }
 
         public void SetRotation(int angle)
         {
+            this.rotation = angle % 360;
             //this.rotation = (angle % 360);
             //org.newdawn.slick.Animation newAnimation = new org.newdawn.slick.Animation();
             //for (int i = 0; i < getSlickAnimation().getFrameCount(); i++)
@@ -216,6 +217,7 @@ namespace Merlin.Game
 
         public void FlipAnimation()
         {
+            isFlipped = !isFlipped;
             //Raylib.
             //org.newdawn.slick.Animation slickAnimation = new org.newdawn.slick.Animation();
             //org.newdawn.slick.Animation oldAnimation = getSlickAnimation();
