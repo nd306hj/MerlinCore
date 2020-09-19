@@ -11,7 +11,7 @@ namespace Merlin.Game
     public class Animation : IDisposable
     {
 
-        private Texture2D texture = Raylib.LoadTexture("resources/raylib-cs_logo.png");
+        private Texture2D texture;//= Raylib.LoadTexture("resources/raylib-cs_logo.png");
         private string resource;
         private int width;
         private int height;
@@ -89,7 +89,7 @@ namespace Merlin.Game
             return this.rotation;
         }
 
-        public void Draw(int x, int y)
+        public void Render(int x, int y)
         {
             if (isRunning)
             {
@@ -124,10 +124,10 @@ namespace Merlin.Game
             //getslickanimation().draw(x, y);
             Raylib.DrawTextureRec(texture, frames[currentFrame], new Vector2(x, y), Raylib_cs.Color.WHITE);
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public void Draw(int x, int y, int width, int height)
+        public void Render(int x, int y, int width, int height)
         {
             //getSlickAnimation().draw(x, y, width, height);
             throw new NotImplementedException();
@@ -154,7 +154,7 @@ namespace Merlin.Game
             isRunning = true;
         }
 
-        public void SetPingPong(Boolean pingPong)
+        public void SetPingPong(bool pingPong)
         {
             this.pingPong = pingPong;
             this.currentFrame = 0;
@@ -205,56 +205,8 @@ namespace Merlin.Game
 
         public void SetRotation(int angle)
         {
-            //this.rotation = (angle % 360);
-            //org.newdawn.slick.Animation newAnimation = new org.newdawn.slick.Animation();
-            //for (int i = 0; i < getSlickAnimation().getFrameCount(); i++)
-            //{
-            //    Image image = this.slickAnimation.getImage(i);
-            //    image.setRotation(angle);
-            //    newAnimation.addFrame(image, this.slickAnimation.getDuration(i));
-            //}
-            //newAnimation.setLooping(this.looping);
-            //newAnimation.setPingPong(this.pingPong);
-            //setDuration(this.duration);
-
-            //this.slickAnimation = newAnimation;
+            this.rotation = angle;
         }
-
-        //private static class AnimationCache
-        //{
-
-        //    private static AnimationCache instance = new AnimationCache();
-        //    private Map<String, SpriteSheet> cachedSpritesSheet = new HashMap<String, SpriteSheet>();
-
-        //    static AnimationCache getInstance()
-        //    {
-        //        return instance;
-        //    }
-
-        //    SpriteSheet loadSpriteSheet(String resource, int tileWidth, int tileHeight)
-        //    {
-        //        try
-        //        {
-        //            SpriteSheet spriteSheet = (SpriteSheet)this.cachedSpritesSheet.get(resource);
-        //            if (spriteSheet == null)
-        //            {
-        //                spriteSheet = new SpriteSheet(resource, tileWidth, tileHeight);
-        //                this.cachedSpritesSheet.put(resource, spriteSheet);
-        //            }
-        //            return spriteSheet;
-        //        }
-        //        catch (Throwable e)
-        //        {
-        //            throw new RuntimeException(e);
-        //        }
-        //    }
-
-        //    org.newdawn.slick.Animation loadAnimation(String resource, int tileWidth, int tileHeight, int duration)
-        //    {
-        //        return new org.newdawn.slick.Animation(loadSpriteSheet(resource, tileWidth, tileHeight), duration);
-        //    }
-        //}
-
         public void FlipAnimation()
         {
             isFlipped = true;
