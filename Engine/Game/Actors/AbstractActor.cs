@@ -107,8 +107,15 @@ namespace Merlin.Game.Actors
         return null;
     }
 
-        public abstract void SetAnimation(Animation animation);
-        public abstract void SetPosition(int posX, int posY);
+        public void SetAnimation(Animation animation)
+        {
+            this.animation = animation;
+        }
+        public void SetPosition(int posX, int posY)
+        {
+            this.posX = posX;
+            this.posY = posY;
+        }
         public abstract void Update();
         public abstract bool IntersectsWithActor(Actor actor);
         public abstract bool IsAffectedByGravity();

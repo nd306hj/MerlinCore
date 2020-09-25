@@ -7,6 +7,7 @@ namespace Merlin.Game.Actors
     public class DummyActor : AbstractActor
     {
         private Animation animation;
+        private bool shouldRemove = false;
         public override bool IntersectsWithActor(Actor actor)
         {
             throw new NotImplementedException();
@@ -19,32 +20,27 @@ namespace Merlin.Game.Actors
 
         public override bool RemovedFromWorld()
         {
-            throw new NotImplementedException();
+            return shouldRemove;
         }
 
         public override void RemoveFromWorld()
         {
-            throw new NotImplementedException();
+            shouldRemove = true;
         }
 
-        public override void SetAnimation(Animation animation)
-        {
-            this.animation = animation;
-        }
+        //public override void SetAnimation(Animation animation)
+        //{
+        //    this.animation = animation;
+        //}
 
         public override void SetGravity(bool isGravityEnabled)
         {
             throw new NotImplementedException();
         }
 
-        public override void SetPosition(int posX, int posY)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Update()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

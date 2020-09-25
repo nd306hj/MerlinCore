@@ -23,7 +23,7 @@ namespace Merlin.Game
         private int currentGameStateID = 1;
 
         private GameWorld gameWorld;
-        private NewGame newGame;
+        //private NewGame newGame;
         private bool disposedValue;
 
         private int width;
@@ -64,25 +64,25 @@ namespace Merlin.Game
         public void SetFactory(Factory factory)
         {
             this.factory = factory;
-            newGame.SetFactory(factory);
+            //newGame.SetFactory(factory);
         }
 
         public void SetScenario(Scenario scenario)
         {
             this.scenario = scenario;
-            newGame.SetScenario(scenario);
+            //newGame.SetScenario(scenario);
         }
 
         public void SetPhysics(Physics physics)
         {
             this.physics = physics;
-            newGame.SetPhysics(physics);
+            //newGame.SetPhysics(physics);
         }
 
         public void SetMap(String path)
         {
             this.mapPath = path;
-            newGame.SetMap(mapPath);
+            //newGame.SetMap(mapPath);
 
         }
 
@@ -102,8 +102,10 @@ namespace Merlin.Game
         {
             if (mapPath == null)
             {
-                this.gameWorld.SetMap("resources/maps/basicTest.tmx");
+                mapPath = "resources/maps/basicTest.tmx";
             }
+
+            this.gameWorld.SetMap(mapPath);
             int i = 0;
             while (!Raylib.WindowShouldClose())
             {
