@@ -1,14 +1,15 @@
-﻿using Merlin.Game.Actors;
-using Merlin.Game.Exceptions;
-using Merlin.Game.Items;
+﻿using Merlin2d.Game.Actors;
+using Merlin2d.Game.Exceptions;
+using Merlin2d.Game.Items;
 using Raylib_cs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using TiledSharp;
 
-namespace Merlin.Game
+namespace Merlin2d.Game
 {
     public class GameWorld : World
     {
@@ -29,6 +30,11 @@ namespace Merlin.Game
         //private Class<? extends Actor>[] renderOrder;
         //private SlickWorld slickWorld;
         private Physics gameLevelPhysics;
+
+        private Camera2D camera;
+
+        private int width;
+        private int height;
         //private int ID;
 
         //public GameWorld(SlickWorld slickWorld)
@@ -38,9 +44,12 @@ namespace Merlin.Game
 
         //}
 
-        public GameWorld()
+        public GameWorld(int width, int height)
         {
-
+            this.width = width;
+            this.height = height;
+            Camera2D camera = new Camera2D();
+            camera.offset = new Vector2(width / 2, height / 2);
         }
 
 

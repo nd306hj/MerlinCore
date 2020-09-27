@@ -2,45 +2,26 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin.Game.Actors
+namespace Merlin2d.Game.Actors
 {
     public class DummyActor : AbstractActor
     {
         private Animation animation;
         private bool shouldRemove = false;
-        public override bool IntersectsWithActor(Actor actor)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool IsAffectedByGravity()
-        {
-            return false;
-        }
-
-        public override bool RemovedFromWorld()
-        {
-            return shouldRemove;
-        }
-
-        public override void RemoveFromWorld()
-        {
-            shouldRemove = true;
-        }
-
-        //public override void SetAnimation(Animation animation)
-        //{
-        //    this.animation = animation;
-        //}
-
-        public override void SetGravity(bool isGravityEnabled)
-        {
-            throw new NotImplementedException();
-        }
+        private int counter = 0;
+        private int i = 0;
 
         public override void Update()
         {
-            //throw new NotImplementedException();
+            if (counter++ % 60 == 0)
+            {
+                Console.WriteLine("{0}", i);
+            }
         }
+
+        //public override void Update()
+        //{
+        //    //throw new NotImplementedException();
+        //}
     }
 }

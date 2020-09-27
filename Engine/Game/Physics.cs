@@ -1,9 +1,9 @@
-﻿using Merlin.Game.Actions;
+﻿using Merlin2d.Game.Actions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin.Game
+namespace Merlin2d.Game
 {
     public interface Physics : Command
     {

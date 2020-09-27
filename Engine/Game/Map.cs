@@ -6,7 +6,7 @@ using System.Numerics;
 using System.Text;
 using TiledSharp;
 
-namespace Merlin.Game
+namespace Merlin2d.Game
 {
     public class Map : IDisposable
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 
-namespace Merlin.Game
+namespace Merlin2d.Game
 {
     class BackgroundTile
     {

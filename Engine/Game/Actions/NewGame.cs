@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin.Game.Actions
+namespace Merlin2d.Game.Actions
 {
     public class NewGame : Action<GameWorld>
     {
@@ -32,13 +32,14 @@ namespace Merlin.Game.Actions
 
         public void Execute(GameWorld t)
         {
-            World gameWorld = new GameWorld();
+            throw new NotImplementedException();
+            //World gameWorld = new GameWorld();
             
 
-            gameWorld.SetFactory(factory);
-            gameWorld.SetScenario(scenario);
-            gameWorld.SetPhysics(physics);
-            gameWorld.SetMap(mapPath);
+            //gameWorld.SetFactory(factory);
+            //gameWorld.SetScenario(scenario);
+            //gameWorld.SetPhysics(physics);
+            //gameWorld.SetMap(mapPath);
             //stateBasedGame.enterState(x);
         }
 

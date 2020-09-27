@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin.Game.Actors
+namespace Merlin2d.Game.Actors
 {
     public interface Actor
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Merlin.Game.Actors;
+using Merlin2d.Game.Actors;
 
-namespace Merlin.Game.Items
+namespace Merlin2d.Game.Items
 {
     public interface Item : Actor
     {

@@ -1,10 +1,10 @@
-﻿using Merlin.Game.Actors;
-using Merlin.Game.Items;
+﻿using Merlin2d.Game.Actors;
+using Merlin2d.Game.Items;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin.Game
+namespace Merlin2d.Game
 {
     public interface World
     {

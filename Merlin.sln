@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merlin", "Engine\Merlin.csproj", "{5B0AE284-C1A7-411A-8A68-25280BA70F83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Merlin2d", "Engine\Merlin2d.csproj", "{5B0AE284-C1A7-411A-8A68-25280BA70F83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MerlinGame", "MerlinGame\MerlinGame.csproj", "{0AD08EED-541A-4118-9DDA-012D246EA716}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5B0AE284-C1A7-411A-8A68-25280BA70F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B0AE284-C1A7-411A-8A68-25280BA70F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B0AE284-C1A7-411A-8A68-25280BA70F83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AD08EED-541A-4118-9DDA-012D246EA716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AD08EED-541A-4118-9DDA-012D246EA716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AD08EED-541A-4118-9DDA-012D246EA716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AD08EED-541A-4118-9DDA-012D246EA716}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

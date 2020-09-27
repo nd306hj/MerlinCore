@@ -1,4 +1,4 @@
-﻿using Merlin.Game.Exceptions;
+﻿using Merlin2d.Game.Exceptions;
 using Raylib_cs;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 
-namespace Merlin.Game
+namespace Merlin2d.Game
 {
     public class Animation : IDisposable
     {
@@ -30,8 +30,10 @@ namespace Merlin.Game
         private int time = 0;
 
         private int nextFrameStep = 1;
+        private Vector2 cameraFocus;
 
         private Rectangle[] frames;
+        
 
         public Animation(String resource, int width, int height, int frameDuration)
         {

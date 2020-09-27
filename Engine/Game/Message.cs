@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin.Game
+namespace Merlin2d.Game
 {
     public class Message
     {

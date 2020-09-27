@@ -1,12 +1,12 @@
-﻿using Merlin.Game.Actions;
-using Merlin.Game.Actors;
-using Merlin.Game.Items;
+﻿using Merlin2d.Game.Actions;
+using Merlin2d.Game.Actors;
+using Merlin2d.Game.Items;
 using Raylib_cs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin.Game
+namespace Merlin2d.Game
 {
     public class GameContainer : IDisposable
     {
@@ -37,7 +37,7 @@ namespace Merlin.Game
                 this.height = height;
                 Raylib.InitWindow(width, height, title);
                 Raylib.SetTargetFPS(60);
-                gameWorld = new GameWorld();
+                gameWorld = new GameWorld(width, height);
                 //this.container.setShowFPS(true);
                 //this.container.setTargetFrameRate(Integer.parseInt((String)Options.getProperties().get("fps")));
                 //this.container.setVSync(Boolean.parseBoolean((String)Options.getProperties().getProperty("vsync")));
@@ -57,7 +57,7 @@ namespace Merlin.Game
 
         public void AddActor(Actor actor)
         {
-            GetCurrentWorld().AddActor(actor);
+            GetWorld().AddActor(actor);
 
         }
 
@@ -155,7 +155,7 @@ namespace Merlin.Game
             return this.height;
         }
 
-        public World GetCurrentWorld()
+        public World GetWorld()
         {
             return this.gameWorld;
         }

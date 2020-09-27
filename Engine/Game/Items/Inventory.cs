@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin.Game.Items
+namespace Merlin2d.Game.Items
 {
     public interface Inventory : ICollection<Item>
     {

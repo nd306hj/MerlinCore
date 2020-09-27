@@ -1,9 +1,9 @@
-﻿using Merlin.Game.Actors;
+﻿using Merlin2d.Game.Actors;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin.Game
+namespace Merlin2d.Game
 {
     public interface Factory
     {
