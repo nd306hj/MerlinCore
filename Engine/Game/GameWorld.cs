@@ -20,10 +20,10 @@ namespace Merlin2d.Game
         private Map tiledMap = null;
         private Factory factory = null;
         private Scenario scenario = null;
-        private List<Actor> actors = new List<Actor>();
-        private List<Actor> actorsToAdd = new List<Actor>();
-        private List<Actor> triggers = new List<Actor>();
-        private Actor centeredOn;
+        private List<IActor> actors = new List<IActor>();
+        private List<IActor> actorsToAdd = new List<IActor>();
+        private List<IActor> triggers = new List<IActor>();
+        private IActor centeredOn;
         private Message message;
         private Inventory inventory;
         private Boolean debugGraphics = false;
@@ -35,14 +35,6 @@ namespace Merlin2d.Game
 
         private int width;
         private int height;
-        //private int ID;
-
-        //public GameWorld(SlickWorld slickWorld)
-        //{
-        //    this();
-        //    this.slickWorld = slickWorld;
-
-        //}
 
         public GameWorld(int width, int height)
         {
@@ -52,18 +44,6 @@ namespace Merlin2d.Game
             camera.offset = new Vector2(width / 2, height / 2);
         }
 
-
-        //public int getID()
-        //{
-        //    return ID;
-        //}
-
-
-        //public void Initialize(GameContainer gc, StateBasedGame sbg)
-        //{
-
-        //}
-
         public void SetMap(String resource)
         {
             this.mapResource = resource;
@@ -72,25 +52,8 @@ namespace Merlin2d.Game
 
         protected void LoadMap()
         {
-            //try
-            //{
-            //    this.actors.clear();
-            //    TiledMapFixer.fixTiledMap(this.mapResource);
-            //    this.tiledMap = new TiledMap(this.mapResource);
-
-            //    loadActors();
-            //    for (Actor actor : this.actors)
-            //    {
-            //        actor.addedToWorld(this);
-            //    }
-            //}
-            //catch (SlickException ex)
-            //{
-            //    throw new GameException(ex);
-            //}
             this.actors.Clear();
             tiledMap = new Map(this.mapResource);
-            //var version = tiledMap.Version;
         }
 
         //    protected void LoadActors()
@@ -137,13 +100,13 @@ namespace Merlin2d.Game
             }
         }
 
-        public void CenterOn(Actor actor)
+        public void CenterOn(IActor actor)
         {
             this.centeredOn = actor;
         }
 
 
-        private bool IsWall(int x, int y)
+        public bool IsWall(int x, int y)
         {
             return tiledMap.IsWall(x, y);
         }
@@ -153,7 +116,7 @@ namespace Merlin2d.Game
             tiledMap.SetWall(x, y, wall);
         }
 
-        public bool IntersectWithWall(Actor actor)
+        public bool IntersectWithWall(IActor actor)
         {
             if (this.tiledMap == null)
             {
@@ -179,26 +142,23 @@ namespace Merlin2d.Game
             return false;
         }
 
-        public void AddActor(Actor actor)
+        public void AddActor(IActor actor)
         {
             actorsToAdd.Add(actor);
         }
 
         private void AddActors()
         {
-            if (!(actorsToAdd.Count == 0))
+            actorsToAdd.ForEach(actor =>
             {
-                actorsToAdd.ForEach(actor =>
-                {
-                    this.actors.Add(actor);
-                    actor.AddedToWorld(this);
-                });
-                actorsToAdd.Clear();
-            }
+                this.actors.Add(actor);
+                actor.AddedToWorld(this);
+            });
+            actorsToAdd.Clear();
         }
 
 
-        public void RemoveActor(Actor actor)
+        public void RemoveActor(IActor actor)
         {
             actor.RemoveFromWorld();
         }
@@ -238,22 +198,10 @@ namespace Merlin2d.Game
 
         public void Update(int i)
         {
-            //if (Input.GetInstance().IsKeyPressed(1))
-            //{
-            //    gc.getInput().clearControlPressedRecord();
-            //    ((SlickWorld)sbg).setCurrentGameID(this.ID);
-            //    sbg.enterState(0);
-            //}
-
             AddActors();
-            List<Actor> listOfActors = new List<Actor>();
-
             triggers.ForEach(trigger => trigger.Update());
+            actors.ForEach(actor => actor.Update());
 
-            foreach (Actor actor in actors)
-            {
-                actor.Update();
-            }
             actors.RemoveAll(actor => actor.RemovedFromWorld());
             if (gameLevelPhysics != null)
             {
@@ -306,25 +254,21 @@ namespace Merlin2d.Game
                     {
                         if (IsWall(x, y))
                         {
-                            //throw new NotImplementedException();
-
-                            //graphics.fillRect(x * this.tiledMap.getTileWidth(), y * this.tiledMap.getTileHeight(), this.tiledMap.getTileWidth(), this.tiledMap.getTileHeight());
                             Raylib.DrawRectangle(x * this.tiledMap.TileWidth, y * this.tiledMap.TileHeight,
                                 this.tiledMap.TileWidth, this.tiledMap.TileHeight, Raylib_cs.Color.WHITE);
                         }
                     }
                 }
             }
-
             this.tiledMap.RenderMapBackground();
         }
 
 
-        private void RenderActors(List<Actor> listOfActors)
+        private void RenderActors(List<IActor> listOfActors)
         {
             //if (this.renderOrder == null)
             //{
-            foreach (Actor actor in listOfActors)
+            foreach (IActor actor in listOfActors)
             {
                 Animation animation = actor.GetAnimation();
                 if (animation != null)
@@ -401,12 +345,12 @@ namespace Merlin2d.Game
             }
         }
 
-        public List<Actor> GetActors()
+        public List<IActor> GetActors()
         {
             return actors;
         }
 
-        public Actor GetActorByName(String name)
+        public IActor GetActorByName(String name)
         {
             return actors.FirstOrDefault(actor => actor.GetName().Equals(name));
         }

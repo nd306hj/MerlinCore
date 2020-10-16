@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Merlin2d.Game.Actors
 {
-    public abstract class AbstractActor : Actor
+    public abstract class AbstractActor : IActor
     {    // VARIABLES
         private int posX, posY;
         private Animation animation;
@@ -55,12 +56,12 @@ namespace Merlin2d.Game.Actors
             return animation;
         }
 
-        public virtual void GetAnimation(Animation animation)
+        public virtual void SetAnimation(Animation animation)
         {
             this.animation = animation;
         }
 
-        public virtual bool Intersects(Actor actor)
+        public virtual bool Intersects(IActor actor)
         {
             if ((posX < actor.GetX() - GetWidth()) || (posX > actor.GetX() + actor.GetWidth()))
             {
@@ -96,26 +97,13 @@ namespace Merlin2d.Game.Actors
             this.name = name;
         }
 
-        public virtual Actor GetActorByName(string name)
+        public virtual IActor GetActorByName(string name)
         {
-            //for (Actor actor : getWorld())
-            foreach (Actor actor in GetWorld().GetActors())
-            {
-                if (actor.GetName().Equals(name))
-                {
-                    return actor;
-                }
-            }
-            return null;
-        }
-
-        public void SetAnimation(Animation animation)
-        {
-            this.animation = animation;
+            return GetWorld().GetActors().First(actor => actor.GetName().Equals(name));
         }
 
         public abstract void Update();
-        public virtual bool IntersectsWithActor(Actor actor)
+        public virtual bool IntersectsWithActor(IActor actor)
         {
             return false;
         }

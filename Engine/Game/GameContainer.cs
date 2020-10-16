@@ -31,31 +31,16 @@ namespace Merlin2d.Game
 
         public GameContainer(String title, int width, int height)
         {
-            //try
-            {
-                this.width = width;
-                this.height = height;
-                Raylib.InitWindow(width, height, title);
-                Raylib.SetTargetFPS(60);
-                gameWorld = new GameWorld(width, height);
-                //this.container.setShowFPS(true);
-                //this.container.setTargetFrameRate(Integer.parseInt((String)Options.getProperties().get("fps")));
-                //this.container.setVSync(Boolean.parseBoolean((String)Options.getProperties().getProperty("vsync")));
-                //this.container.setup();
-                //this.container.setAlwaysRender(true);
-
-            }
-            //catch (SlickException ex)
-            //{
-            //    throw new GameException(ex);
-            //}
+            this.width = width;
+            this.height = height;
+            Raylib.InitWindow(width, height, title);
+            Raylib.SetTargetFPS(60);
+            gameWorld = new GameWorld(width, height);
 
             Input.GetInstance();
-            //input = Input.getInstance();
-
         }
 
-        public void AddActor(Actor actor)
+        public void AddActor(IActor actor)
         {
             GetWorld().AddActor(actor);
 
@@ -86,16 +71,16 @@ namespace Merlin2d.Game
 
         }
 
-        public void RemoveActor(Actor actor)
+        public void RemoveActor(IActor actor)
         {
-        //    GameState state = getCurrentState();
-        //    if (state instanceof World) {
-        //        ((World)state).removeActor(actor);
-        //    }
-        //else
-        //    {
-        //        ((World)getState(stateID)).removeActor(actor);
-        //    }
+            //    GameState state = getCurrentState();
+            //    if (state instanceof World) {
+            //        ((World)state).removeActor(actor);
+            //    }
+            //else
+            //    {
+            //        ((World)getState(stateID)).removeActor(actor);
+            //    }
         }
 
         public void Run()
@@ -105,19 +90,18 @@ namespace Merlin2d.Game
                 this.gameWorld.SetMap(mapPath);
             }
 
-            
+
             int i = 0;
             while (!Raylib.WindowShouldClose())
             {
                 Raylib.BeginDrawing();
                 Raylib.ClearBackground(Raylib_cs.Color.BLACK);
-                //Raylib.SetTargetFPS(60);
                 //Raylib.DrawText("Hello, world!", 12, 12, 20, Color.BLACK);
                 gameWorld.Update(i++);
                 gameWorld.Render(this);
 
                 Raylib.EndDrawing();
-                
+
             }
 
 

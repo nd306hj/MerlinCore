@@ -8,6 +8,6 @@ namespace Merlin2d.Game
     public interface Factory
     {
 
-        Actor create(String actorType, String actorName);
+        IActor Create(String actorType, String actorName);
     }
 }

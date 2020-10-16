@@ -9,20 +9,20 @@ namespace Merlin2d.Game
     public interface World
     {
 
-        void AddActor(Actor actor);
-        void RemoveActor(Actor actor);
+        void AddActor(IActor actor);
+        void RemoveActor(IActor actor);
         //IEnumerator<Actor> GetEnumerator();
-        Boolean IntersectWithWall(Actor actor);
-        List<Actor> GetActors();
+        Boolean IntersectWithWall(IActor actor);
+        List<IActor> GetActors();
         void ShowMessage(Message message);
-        //    boolean isWall(int x, int y);
+        bool IsWall(int x, int y);
         void SetWall(int x, int y, Boolean wall);
-        Actor GetActorByName(String name);
+        IActor GetActorByName(String name);
 
         int GetTileWidth();
         int GetTileHeight();
 
-        void CenterOn(Actor actor);
+        void CenterOn(IActor actor);
 
         void ShowInventory(Inventory inventory);
         void SetFactory(Factory factory);

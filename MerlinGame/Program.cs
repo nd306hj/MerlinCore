@@ -1,5 +1,6 @@
 ﻿using Merlin2d.Game;
 using Merlin2d.Game.Actors;
+using MerlinGame.Actors;
 using System;
 
 namespace MerlinGame
@@ -10,7 +11,7 @@ namespace MerlinGame
         {
             GameContainer container = new GameContainer("Remorseless winter", 1000, 800);
             container.SetMap("resources/maps/basicTest.tmx");
-            Actor actor = new DummyActor();
+            IActor actor = new DummyActor();
             actor.SetPosition(100, 100);
             Animation animation = new Animation("resources/demo.png", 64, 64);
             animation.Start();

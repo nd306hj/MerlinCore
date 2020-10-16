@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Merlin2d.Game.Actors
 {
-    public interface Actor
+    public interface IActor
     {
         void SetName(String name);
         void SetAnimation(Animation animation);
@@ -18,7 +18,7 @@ namespace Merlin2d.Game.Actors
         World GetWorld();
         void Update();
         void AddedToWorld(World world);
-        Boolean IntersectsWithActor(Actor actor);
+        Boolean IntersectsWithActor(IActor actor);
         Boolean IsAffectedByGravity();
         void SetGravity(Boolean isGravityEnabled);
         void RemoveFromWorld();

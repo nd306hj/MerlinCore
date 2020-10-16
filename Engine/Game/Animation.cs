@@ -102,13 +102,11 @@ namespace Merlin2d.Game
         {
             if (isRunning)
             {
-
                 if (time++ >= frameDuration)
                 {
                     currentFrame += nextFrameStep;
                     time = 0;
                 }
-
                 if (currentFrame >= framesCount)
                 {
                     if (pingPong)
@@ -120,8 +118,6 @@ namespace Merlin2d.Game
                     {
                         currentFrame = 0;
                     }
-
-
                 }
                 else if (currentFrame < 0)
                 {
@@ -129,11 +125,7 @@ namespace Merlin2d.Game
                     nextFrameStep = 1;
                 }
             }
-
-            //getslickanimation().draw(x, y);
             Raylib.DrawTextureRec(texture, frames[currentFrame], new Vector2(x, y), Raylib_cs.Color.WHITE);
-
-            //throw new NotImplementedException();
         }
 
         public void Render(int x, int y, int width, int height)
@@ -141,17 +133,6 @@ namespace Merlin2d.Game
             //getSlickAnimation().draw(x, y, width, height);
             throw new NotImplementedException();
         }
-
-        //private org.newdawn.slick.Animation getSlickAnimation()
-        //{
-        //    if (this.slickAnimation == null)
-        //    {
-        //        this.slickAnimation = AnimationCache.getInstance().loadAnimation(this.resource, this.width, this.height, this.duration);
-        //        getSlickAnimation().setPingPong(this.pingPong);
-        //        getSlickAnimation().setLooping(this.looping);
-        //    }
-        //    return this.slickAnimation;
-        //}
 
         public void Stop()
         {
@@ -177,10 +158,7 @@ namespace Merlin2d.Game
 
         public void StopAt(int frameIndex)
         {
-            //if (this.slickAnimation != null)
-            //{
-            //    this.slickAnimation.stopAt(frameIndex);
-            //}
+            throw new NotImplementedException("Not yet implemented!");
         }
 
         public void SetCurrentFrame(int frameIndex)
@@ -189,12 +167,7 @@ namespace Merlin2d.Game
             {
                 currentFrame = frameIndex;
                 time = 0;
-
             }
-            //if (this.slickAnimation != null)
-            //{
-            //    this.slickAnimation.setCurrentFrame(frameIndex);
-            //}
         }
 
         public int GetCurrentFrame()
