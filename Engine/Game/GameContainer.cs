@@ -100,12 +100,12 @@ namespace Merlin2d.Game
 
         public void Run()
         {
-            if (mapPath == null)
+            if (mapPath != null)
             {
-                mapPath = "resources/maps/basicTest.tmx";
+                this.gameWorld.SetMap(mapPath);
             }
 
-            this.gameWorld.SetMap(mapPath);
+            
             int i = 0;
             while (!Raylib.WindowShouldClose())
             {

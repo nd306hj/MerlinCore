@@ -2,6 +2,7 @@
 using Raylib_cs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -41,6 +42,12 @@ namespace Merlin2d.Game
             this.width = width;
             this.height = height;
             this.frameDuration = frameDuration;
+
+            if (!System.IO.File.Exists(resource))
+            {
+                throw new FileNotFoundException(
+                    String.Format("Error while loading spritesheet: {0} not found", resource));
+            }
 
             texture = Raylib.LoadTexture(resource);
 

@@ -7,7 +7,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\maps\basicTest.tmx" />
+    <None Remove="Resources\maps\images\_level03static.png" />
+    <None Remove="Resources\maps\level01.tmx" />
+    <None Remove="Resources\maps\test - Copy.tmx" />
+    <None Remove="Resources\maps\test.tmx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Engine\Merlin2d.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\maps\basicTest.tmx" />
+    <Resource Include="Resources\maps\images\_level03static.png" />
+    <Resource Include="Resources\maps\level01.tmx" />
+    <Resource Include="Resources\maps\test - Copy.tmx" />
+    <Resource Include="Resources\maps\test.tmx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\maps\images\_level01static.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\maps\images\_level02static.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

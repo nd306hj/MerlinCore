@@ -5,6 +5,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Merlin2d</AssemblyName>
     <RootNamespace>Merlin2d</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Kellei</Authors>
+    <Company>TUKE</Company>
+    <Description>Awesome port of project.merlin into C#</Description>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyVersion>1.0.0.19272</AssemblyVersion>
+    <FileVersion>1.0.0.19272</FileVersion>
+    <Version>1.0.0.19272</Version>
   </PropertyGroup>
 
   <ItemGroup>

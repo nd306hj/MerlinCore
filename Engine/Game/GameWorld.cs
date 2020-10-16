@@ -275,7 +275,10 @@ namespace Merlin2d.Game
                 throw new NotImplementedException();
                 //graphics.translate(getXOffset(gc), getYOffset(gc));
             }
-            RenderMap();
+            if (tiledMap != null)
+            {
+                RenderMap();
+            }
 
             RenderActors(this.actors);
             RenderActors(this.triggers);
