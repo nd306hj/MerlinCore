@@ -17,7 +17,7 @@ namespace Merlin2d.Game
 
         private Factory factory;
         private Scenario scenario;
-        private Physics physics;
+        private IPhysics physics;
         private String mapPath = null;
 
         private int currentGameStateID = 1;
@@ -58,7 +58,7 @@ namespace Merlin2d.Game
             //newGame.SetScenario(scenario);
         }
 
-        public void SetPhysics(Physics physics)
+        public void SetPhysics(IPhysics physics)
         {
             this.physics = physics;
             //newGame.SetPhysics(physics);
@@ -88,6 +88,11 @@ namespace Merlin2d.Game
             if (mapPath != null)
             {
                 this.gameWorld.SetMap(mapPath);
+            }
+
+            if (physics != null)
+            {
+                this.gameWorld.SetPhysics(physics);
             }
 
 
@@ -139,7 +144,7 @@ namespace Merlin2d.Game
             return this.height;
         }
 
-        public World GetWorld()
+        public IWorld GetWorld()
         {
             return this.gameWorld;
         }

@@ -6,6 +6,6 @@ namespace Merlin2d.Game
 {
     public interface Scenario
     {
-        void CreateActors(World world);
+        void CreateActors(IWorld world);
     }
 }

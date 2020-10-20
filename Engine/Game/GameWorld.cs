@@ -11,7 +11,7 @@ using TiledSharp;
 
 namespace Merlin2d.Game
 {
-    public class GameWorld : World
+    public class GameWorld : IWorld
     {
         private static String WALL_LAYER = "walls";
         private static String BACKGROUND_LAYER = "background";
@@ -29,7 +29,7 @@ namespace Merlin2d.Game
         private Boolean debugGraphics = false;
         //private Class<? extends Actor>[] renderOrder;
         //private SlickWorld slickWorld;
-        private Physics gameLevelPhysics;
+        private IPhysics gameLevelPhysics;
 
         private Camera2D camera;
 
@@ -91,7 +91,7 @@ namespace Merlin2d.Game
             this.scenario = scenario;
         }
 
-        public void SetPhysics(Physics physics)
+        public void SetPhysics(IPhysics physics)
         {
             this.gameLevelPhysics = physics;
             if (physics != null)

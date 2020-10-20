@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Merlin2d.Game
 {
-    public interface World
+    public interface IWorld
     {
 
         void AddActor(IActor actor);
@@ -28,6 +28,6 @@ namespace Merlin2d.Game
         void SetFactory(Factory factory);
         void SetScenario(Scenario scenario);
         void SetMap(string path);
-        void SetPhysics(Physics physics);
+        void SetPhysics(IPhysics physics);
     }
 }

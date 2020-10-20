@@ -9,7 +9,7 @@ namespace Merlin2d.Game.Actors
     {    // VARIABLES
         private int posX, posY;
         private Animation animation;
-        private World world;
+        private IWorld world;
         private String name;
         private bool isRemoved = false;
         private bool isGravityEnabled = false;
@@ -75,13 +75,13 @@ namespace Merlin2d.Game.Actors
             return true;
         }
 
-        public void AddedToWorld(World world)
+        public void AddedToWorld(IWorld world)
         {
             this.world = world;
         }
 
 
-        public World GetWorld()
+        public IWorld GetWorld()
         {
             return world;
         }
@@ -103,22 +103,27 @@ namespace Merlin2d.Game.Actors
         }
 
         public abstract void Update();
+        
         public virtual bool IntersectsWithActor(IActor actor)
         {
             return false;
         }
-        public virtual bool IsAffectedByGravity()
+
+        public virtual bool IsAffectedByPhysics()
         {
             return false;
         }
-        public virtual void SetGravity(bool isGravityEnabled)
+
+        public virtual void SetPhysics(bool isGravityEnabled)
         {
             this.isGravityEnabled = isGravityEnabled;
         }
+
         public virtual void RemoveFromWorld()
         {
             isRemoved = true;
         }
+
         public virtual bool RemovedFromWorld()
         {
             return isRemoved;

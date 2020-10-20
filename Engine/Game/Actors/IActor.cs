@@ -6,22 +6,22 @@ namespace Merlin2d.Game.Actors
 {
     public interface IActor
     {
-        void SetName(String name);
+        void SetName(string name);
         void SetAnimation(Animation animation);
         void SetPosition(int posX, int posY);
-        String GetName();
+        string GetName();
         int GetX();
         int GetY();
         int GetWidth();
         int GetHeight();
         Animation GetAnimation();
-        World GetWorld();
+        IWorld GetWorld();
         void Update();
-        void AddedToWorld(World world);
-        Boolean IntersectsWithActor(IActor actor);
-        Boolean IsAffectedByGravity();
-        void SetGravity(Boolean isGravityEnabled);
+        void AddedToWorld(IWorld world);
+        bool IntersectsWithActor(IActor actor);
+        bool IsAffectedByPhysics();
+        void SetPhysics(bool isPhysicsEnabled);
         void RemoveFromWorld();
-        Boolean RemovedFromWorld();
+        bool RemovedFromWorld();
     }
 }

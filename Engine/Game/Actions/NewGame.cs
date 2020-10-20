@@ -8,7 +8,7 @@ namespace Merlin2d.Game.Actions
     {
         private Factory factory;
         private Scenario scenario;
-        private Physics physics;
+        private IPhysics physics;
         private string mapPath = "";
 
         public void SetFactory(Factory factory)
@@ -20,7 +20,7 @@ namespace Merlin2d.Game.Actions
         {
             this.scenario = scenario;
         }
-        public void SetPhysics(Physics physics)
+        public void SetPhysics(IPhysics physics)
         {
             this.physics = physics;
         }
