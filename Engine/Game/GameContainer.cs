@@ -46,19 +46,19 @@ namespace Merlin2d.Game
 
         }
 
-        public void SetFactory(Factory factory)
+        private void SetFactory(Factory factory)
         {
             this.factory = factory;
             //newGame.SetFactory(factory);
         }
 
-        public void SetScenario(Scenario scenario)
+        private void SetScenario(Scenario scenario)
         {
             this.scenario = scenario;
             //newGame.SetScenario(scenario);
         }
 
-        public void SetPhysics(IPhysics physics)
+        private void SetPhysics(IPhysics physics)
         {
             this.physics = physics;
             //newGame.SetPhysics(physics);

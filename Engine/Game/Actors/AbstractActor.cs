@@ -111,7 +111,7 @@ namespace Merlin2d.Game.Actors
 
         public virtual bool IsAffectedByPhysics()
         {
-            return false;
+            return isGravityEnabled;
         }
 
         public virtual void SetPhysics(bool isGravityEnabled)

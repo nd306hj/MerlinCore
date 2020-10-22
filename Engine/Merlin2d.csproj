@@ -10,9 +10,9 @@
     <Company>TUKE</Company>
     <Description>Awesome port of project.merlin into C#</Description>
     <SignAssembly>false</SignAssembly>
-    <AssemblyVersion>1.0.0.20293</AssemblyVersion>
-    <FileVersion>1.0.0.20293</FileVersion>
-    <Version>1.0.1.20293</Version>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <FileVersion>1.0.2</FileVersion>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

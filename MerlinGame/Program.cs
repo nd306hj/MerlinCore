@@ -20,7 +20,7 @@ namespace MerlinGame
             //animation.Start();
             //actor.SetAnimation(animation);
             //container.AddActor(actor);
-            container.SetPhysics(new Gravity());
+            container.GetWorld().SetPhysics(new Gravity());
             container.Run();
             //var a = container.GetWorld().GetActors().Where(x => x.GetName().Equals("aaa"));
             //List<int> values = new List<int>();
