@@ -36,7 +36,7 @@ namespace Merlin2d.Game
         private Rectangle[] frames;
         
 
-        public Animation(String resource, int width, int height, int frameDuration)
+        public Animation(string resource, int width, int height, int frameDuration)
         {
             this.resource = resource;
             this.width = width;
@@ -68,12 +68,12 @@ namespace Merlin2d.Game
 
         }
 
-        public Animation(String resource, int width, int height) : this(resource, width, height, 10)
+        public Animation(string resource, int width, int height) : this(resource, width, height, 10)
         {
 
         }
 
-        public String GetResource()
+        public string GetResource()
         {
             return this.resource;
         }
@@ -98,7 +98,7 @@ namespace Merlin2d.Game
             return this.rotation;
         }
 
-        public void Render(int x, int y)
+        internal void Render(int x, int y)
         {
             if (isRunning)
             {
