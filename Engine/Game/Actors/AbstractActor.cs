@@ -7,10 +7,11 @@ namespace Merlin2d.Game.Actors
 {
     public abstract class AbstractActor : IActor
     {    // VARIABLES
-        private int posX, posY;
+        private int posX;
+        private int posY;
         private Animation animation;
         private IWorld world;
-        private String name;
+        private string name;
         private bool isRemoved = false;
         private bool isGravityEnabled = false;
 
@@ -20,7 +21,7 @@ namespace Merlin2d.Game.Actors
 
         }
 
-        public AbstractActor(String name)
+        public AbstractActor(string name)
         {
             this.name = name;
         }
@@ -45,10 +46,10 @@ namespace Merlin2d.Game.Actors
             return animation.GetHeight();
         }
 
-        public virtual void SetPosition(int arg0, int arg1)
+        public virtual void SetPosition(int x, int y)
         {
-            posX = arg0;
-            posY = arg1;
+            posX = x;
+            posY = y;
         }
 
         public virtual Animation GetAnimation()
@@ -61,21 +62,21 @@ namespace Merlin2d.Game.Actors
             this.animation = animation;
         }
 
-        public virtual bool Intersects(IActor actor)
-        {
-            if ((posX < actor.GetX() - GetWidth()) || (posX > actor.GetX() + actor.GetWidth()))
-            {
-                return false;
-            }
+        //public virtual bool Intersects(IActor other)
+        //{
+        //    if ((posX < actor.GetX() - GetWidth()) || (posX > actor.GetX() + actor.GetWidth()))
+        //    {
+        //        return false;
+        //    }
 
-            if ((posY < actor.GetY() - GetHeight()) || (posY > actor.GetY() + actor.GetHeight()))
-            {
-                return false;
-            }
-            return true;
-        }
+        //    if ((posY < actor.GetY() - GetHeight()) || (posY > actor.GetY() + actor.GetHeight()))
+        //    {
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
-        public void AddedToWorld(IWorld world)
+        public void OnAddedToWorld(IWorld world)
         {
             this.world = world;
         }

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Merlin2d.Game
 {
-    public interface Factory
-    {
+    public interface IFactory
 
+    {
         IActor Create(String actorType, String actorName);
     }
 }

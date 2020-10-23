@@ -18,7 +18,7 @@ namespace Merlin2d.Game
         private static int BORDER = 2;
         private String mapResource = null;
         private Map tiledMap = null;
-        private Factory factory = null;
+        private IFactory factory = null;
         private Scenario scenario = null;
         private List<IActor> actors = new List<IActor>();
         private List<IActor> actorsToAdd = new List<IActor>();
@@ -81,7 +81,7 @@ namespace Merlin2d.Game
         //        }
         //    }
 
-        public void SetFactory(Factory factory)
+        public void SetFactory(IFactory factory)
         {
             this.factory = factory;
         }
@@ -147,26 +147,10 @@ namespace Merlin2d.Game
             actorsToAdd.Add(actor);
         }
 
-        private void AddActors()
-        {
-            actorsToAdd.ForEach(actor =>
-            {
-                this.actors.Add(actor);
-                actor.AddedToWorld(this);
-            });
-            actorsToAdd.Clear();
-        }
-
-
         public void RemoveActor(IActor actor)
         {
             actor.RemoveFromWorld();
         }
-
-        //public Iterator<Actor> iterator()
-        //{
-        //    return this.actors.iterator();
-        //}
 
         public void ShowMessage(Message message)
         {
@@ -196,9 +180,15 @@ namespace Merlin2d.Game
             return 0;
         }
 
-        public void Update(int i)
+        internal void Update(long i)
         {
-            AddActors();
+            actorsToAdd.ForEach(actor =>
+            {
+                this.actors.Add(actor);
+                actor.OnAddedToWorld(this);
+            });
+            actorsToAdd.Clear();
+
             triggers.ForEach(trigger => trigger.Update());
             actors.ForEach(actor => actor.Update());
 
@@ -207,7 +197,6 @@ namespace Merlin2d.Game
             {
                 gameLevelPhysics.Execute();
             }
-
         }
 
         //public void setRenderOrder(Class<? extends Actor>...actorClasses)
@@ -215,9 +204,8 @@ namespace Merlin2d.Game
         //    this.renderOrder = actorClasses;
         //}
 
-        public void Render(GameContainer gc)
+        internal void Render(GameContainer gc)
         {
-            //graphics.drawString("Current game state: " + String.valueOf(ID), 10, 30);
             if (this.centeredOn != null)
             {
                 throw new NotImplementedException();
@@ -348,11 +336,6 @@ namespace Merlin2d.Game
         public List<IActor> GetActors()
         {
             return actors;
-        }
-
-        public IActor GetActorByName(String name)
-        {
-            return actors.FirstOrDefault(actor => actor.GetName().Equals(name));
         }
 
 

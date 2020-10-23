@@ -21,14 +21,14 @@ namespace Merlin2d.Game
         private bool looping = true;
         private bool pingPong = false;
         private bool isRunning = false;
-        //private bool isDecrementing = false;
-
+        private bool shouldStopAt = false;
         private bool isFlipped = false;
         private bool disposedValue;
 
         private int currentFrame = 0;
         private int framesCount;
         private int time = 0;
+        private int stopIndex = 0;
 
         private int nextFrameStep = 1;
         private Vector2 cameraFocus;
@@ -46,7 +46,7 @@ namespace Merlin2d.Game
             if (!System.IO.File.Exists(resource))
             {
                 throw new FileNotFoundException(
-                    String.Format("Error while loading spritesheet: {0} not found", resource));
+                    String.Format("Error while loading spritesheet: {0} not found.", resource));
             }
 
             texture = Raylib.LoadTexture(resource);
@@ -118,11 +118,23 @@ namespace Merlin2d.Game
                     {
                         currentFrame = 0;
                     }
+                    if (!looping)
+                    {
+                        Stop();
+                    }
                 }
                 else if (currentFrame < 0)
                 {
                     currentFrame = 0;
                     nextFrameStep = 1;
+                    if (!looping)
+                    {
+                        Stop();
+                    }
+                }
+                if (shouldStopAt && currentFrame == stopIndex)
+                {
+                    Stop();
                 }
             }
             Raylib.DrawTextureRec(texture, frames[currentFrame], new Vector2(x, y), Raylib_cs.Color.WHITE);
@@ -137,11 +149,13 @@ namespace Merlin2d.Game
         public void Stop()
         {
             isRunning = false;
+            shouldStopAt = false;
         }
 
         public void Start()
         {
             isRunning = true;
+            shouldStopAt = false;
         }
 
         public void SetPingPong(bool pingPong)
@@ -158,7 +172,8 @@ namespace Merlin2d.Game
 
         public void StopAt(int frameIndex)
         {
-            throw new NotImplementedException("Not yet implemented!");
+            stopIndex = frameIndex;
+            shouldStopAt = true;
         }
 
         public void SetCurrentFrame(int frameIndex)
@@ -191,7 +206,7 @@ namespace Merlin2d.Game
         }
         public void FlipAnimation()
         {
-            isFlipped = true;
+            isFlipped = !isFlipped;
             for (int i = 0; i < framesCount; i++)
             {
                 frames[i].width = -frames[i].width;

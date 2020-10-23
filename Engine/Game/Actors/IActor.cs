@@ -17,8 +17,8 @@ namespace Merlin2d.Game.Actors
         Animation GetAnimation();
         IWorld GetWorld();
         void Update();
-        void AddedToWorld(IWorld world);
-        bool IntersectsWithActor(IActor actor);
+        void OnAddedToWorld(IWorld world);
+        bool IntersectsWithActor(IActor other);
         bool IsAffectedByPhysics();
         void SetPhysics(bool isPhysicsEnabled);
         void RemoveFromWorld();

@@ -11,14 +11,14 @@ namespace Merlin2d.Game
     public class GameContainer : IDisposable
     {
 
-        public static int stateID = 1;
+        //public static int stateID = 1;
         //private SlickAppGameContainer container;
-        private Input input;
+        //private Input input;
 
-        private Factory factory;
+        private IFactory factory;
         private Scenario scenario;
         private IPhysics physics;
-        private String mapPath = null;
+        private string mapPath = null;
 
         private int currentGameStateID = 1;
 
@@ -29,7 +29,7 @@ namespace Merlin2d.Game
         private int width;
         private int height;
 
-        public GameContainer(String title, int width, int height)
+        public GameContainer(string title, int width, int height)
         {
             this.width = width;
             this.height = height;
@@ -46,7 +46,7 @@ namespace Merlin2d.Game
 
         }
 
-        private void SetFactory(Factory factory)
+        private void SetFactory(IFactory factory)
         {
             this.factory = factory;
             //newGame.SetFactory(factory);
@@ -96,13 +96,13 @@ namespace Merlin2d.Game
             }
 
 
-            int i = 0;
+            long index = 0;
             while (!Raylib.WindowShouldClose())
             {
                 Raylib.BeginDrawing();
                 Raylib.ClearBackground(Raylib_cs.Color.BLACK);
                 //Raylib.DrawText("Hello, world!", 12, 12, 20, Color.BLACK);
-                gameWorld.Update(i++);
+                gameWorld.Update(index++);
                 gameWorld.Render(this);
 
                 Raylib.EndDrawing();
@@ -112,26 +112,9 @@ namespace Merlin2d.Game
 
         }
 
-        //public Iterator<Actor> iterator()
-        //{
-        //    GameState state = getCurrentState();
-        //    if (state instanceof GameLevelState) {
-        //        return ((GameLevelState)state).iterator();
-        //    }
-        //    return ((World)getState(stateID)).iterator();
-        //}
-
         public void ShowMessage(Message message)
         {
             gameWorld.ShowMessage(message);
-        }
-
-        public void ShowBackpack(Inventory inventory)
-        {
-            //GameState state = getCurrentState();
-            //if (state instanceof GameLevelState) {
-            //    ((GameLevelState)state).showInventory(inventory);
-            //}
         }
 
         public int GetWidth()

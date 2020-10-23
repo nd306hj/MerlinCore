@@ -46,7 +46,7 @@ namespace Merlin2d.Game
             R = r;
             G = g;
             B = b;
-            A = 0;
+            A = a;
         }
 
         public static implicit operator Raylib_cs.Color(Color c) => new Raylib_cs.Color(c.R, c.G, c.B, c.A);

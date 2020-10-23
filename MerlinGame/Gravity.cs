@@ -9,12 +9,12 @@ namespace MerlinGame
     {
         public void Execute()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void SetWorld(IWorld world)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

@@ -17,7 +17,6 @@ namespace Merlin2d.Game
         void ShowMessage(Message message);
         bool IsWall(int x, int y);
         void SetWall(int x, int y, Boolean wall);
-        IActor GetActorByName(String name);
 
         int GetTileWidth();
         int GetTileHeight();
@@ -25,7 +24,7 @@ namespace Merlin2d.Game
         void CenterOn(IActor actor);
 
         void ShowInventory(Inventory inventory);
-        void SetFactory(Factory factory);
+        void SetFactory(IFactory factory);
         void SetScenario(Scenario scenario);
         void SetMap(string path);
         void SetPhysics(IPhysics physics);

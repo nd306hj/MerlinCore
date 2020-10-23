@@ -6,12 +6,12 @@ namespace Merlin2d.Game.Actions
 {
     public class NewGame : Action<GameWorld>
     {
-        private Factory factory;
+        private IFactory factory;
         private Scenario scenario;
         private IPhysics physics;
         private string mapPath = "";
 
-        public void SetFactory(Factory factory)
+        public void SetFactory(IFactory factory)
         {
             this.factory = factory;
         }
