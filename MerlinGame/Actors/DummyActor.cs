@@ -8,10 +8,13 @@ namespace MerlinGame.Actors
 {
     public class DummyActor : AbstractActor
     {
-        private Animation animation;
-        private bool shouldRemove = false;
         private int counter = 0;
         private int i = 0;
+
+        public DummyActor()
+        {
+            SetAnimation(new Animation("resources/sprites/default.png", 128, 128));
+        }
 
         public override void Update()
         {

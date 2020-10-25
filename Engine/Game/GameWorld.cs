@@ -1,4 +1,5 @@
-﻿using Merlin2d.Game.Actors;
+﻿using Merlin2d.Game.Actions;
+using Merlin2d.Game.Actors;
 using Merlin2d.Game.Exceptions;
 using Merlin2d.Game.Items;
 using Raylib_cs;
@@ -36,59 +37,59 @@ namespace Merlin2d.Game
         private int width;
         private int height;
 
+        private List<Action<IWorld>> initActions = new List<Action<IWorld>>();
+
         public GameWorld(int width, int height)
         {
             this.width = width;
             this.height = height;
-            Camera2D camera = new Camera2D();
             camera.offset = new Vector2(width / 2, height / 2);
         }
 
-        public void SetMap(String resource)
+        internal void Initialize()
+        {
+            if (mapResource != null)
+            {
+                LoadMap();
+            }
+
+            initActions.ForEach(a => a(this));
+        }
+
+        public void SetMap(string resource)
         {
             this.mapResource = resource;
-            LoadMap();
         }
 
         protected void LoadMap()
         {
             this.actors.Clear();
             tiledMap = new Map(this.mapResource);
+            actors.Clear();
+            actorsToAdd.Clear();
+            if (factory != null)
+            {
+                tiledMap.ActorData.ForEach(a =>
+                {
+                    actorsToAdd.Add(factory.Create(a.Type, a.Name, a.X, a.Y));
+                });
+                AddActors();
+            }
         }
-
-        //    protected void LoadActors()
-        //    {
-        //        for (int groupID = 0; groupID < this.tiledMap.getObjectGroupCount(); groupID++) {
-        //            for (int objectID = 0; objectID < this.tiledMap.getObjectCount(groupID); objectID++)
-        //            {
-        //                String type = this.tiledMap.getObjectType(groupID, objectID);
-        //                String name = this.tiledMap.getObjectName(groupID, objectID);
-        //                if (this.factory != null)
-        //                {
-        //                    Actor actor = this.factory.create(type, name);
-        //                    if (actor != null)
-        //                    {
-        //                        actor.SetPosition(this.tiledMap.getObjectX(groupID, objectID), this.tiledMap.getObjectY(groupID, objectID));
-        //                        addActor(actor);
-        //                    }
-        //                }
-
-        //            }
-        //        }
-
-        //        if (this.scenario != null) {
-        //            scenario.CreateActors(this);
-        //        }
-        //    }
 
         public void SetFactory(IFactory factory)
         {
             this.factory = factory;
         }
 
-        public void SetScenario(Scenario scenario)
+        internal void SetCamera(Camera2D camera)
         {
-            this.scenario = scenario;
+            this.camera = camera;
+        }
+
+        public void AddInitAction(Action<IWorld> action)
+        {
+            initActions.Add(action);
         }
 
         public void SetPhysics(IPhysics physics)
@@ -180,7 +181,7 @@ namespace Merlin2d.Game
             return 0;
         }
 
-        internal void Update(long i)
+        private void AddActors()
         {
             actorsToAdd.ForEach(actor =>
             {
@@ -188,6 +189,12 @@ namespace Merlin2d.Game
                 actor.OnAddedToWorld(this);
             });
             actorsToAdd.Clear();
+        }
+
+        internal void Update(long i)
+        {
+            AddActors();
+
 
             triggers.ForEach(trigger => trigger.Update());
             actors.ForEach(actor => actor.Update());
@@ -208,7 +215,7 @@ namespace Merlin2d.Game
         {
             if (this.centeredOn != null)
             {
-                throw new NotImplementedException();
+                camera.target = new Vector2(centeredOn.GetX(), centeredOn.GetY());
                 //graphics.translate(getXOffset(gc), getYOffset(gc));
             }
             if (tiledMap != null)
@@ -218,11 +225,6 @@ namespace Merlin2d.Game
 
             RenderActors(this.actors);
             RenderActors(this.triggers);
-            if (this.centeredOn != null)
-            {
-                //graphics.translate(-GetXOffset(gc), -getYOffset(gc));
-                throw new NotImplementedException();
-            }
             RenderInventory(gc);
 
             RenderMessage();
@@ -254,8 +256,6 @@ namespace Merlin2d.Game
 
         private void RenderActors(List<IActor> listOfActors)
         {
-            //if (this.renderOrder == null)
-            //{
             foreach (IActor actor in listOfActors)
             {
                 Animation animation = actor.GetAnimation();
@@ -268,38 +268,7 @@ namespace Merlin2d.Game
                     throw new MissingAnimationException("Animation missing for" + actor.GetType().ToString());
                 }
             }
-            if (this.centeredOn != null)
-            {
-                throw new NotImplementedException();
-                //this.centeredOn.getAnimation().draw(this.centeredOn.getX(), this.centeredOn.getY());
-            }
-            //}
-            //else
-            //{
-            //    for (Class actorClass : this.renderOrder)
-            //    {
-            //        renderActorsOfType(graphics, actorClass);
-            //    }
-            //}
         }
-
-        //    private void renderActorsOfType(Graphics graphics, Class<? extends Actor> type)
-        //{
-        //    for (Actor actor : this.actors) {
-        //    if (type.isInstance(actor))
-        //    {
-        //        Animation animation = actor.getAnimation();
-        //        if (animation != null)
-        //        {
-        //            animation.draw(actor.getX(), actor.getY());
-        //        }
-        //        else
-        //        {
-        //            throw new IllegalStateException("Animation missing for" + actor.getClass().getName());
-        //        }
-        //    }
-        //}
-        //    }
 
         private void RenderInventory(GameContainer gc)
         {

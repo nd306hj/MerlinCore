@@ -1,4 +1,5 @@
-﻿using Raylib_cs;
+﻿using Merlin2d.Game.Actors;
+using Raylib_cs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using TiledSharp;
 
 namespace Merlin2d.Game
 {
-    public class Map : IDisposable
+    internal class Map : IDisposable
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
@@ -25,6 +26,8 @@ namespace Merlin2d.Game
         private Texture2D backgroundTexture;
         private bool disposedValue;
 
+        public List<ActorData> ActorData { get; private set; }
+
         public Map(string mapResource)
         {
             TmxMap tiledMap = new TmxMap(mapResource);
@@ -37,6 +40,7 @@ namespace Merlin2d.Game
             TileHeight = 16;
             LoadWalls(tiledMap);
             LoadBackground(tiledMap);
+            LoadActors(tiledMap);
             //LoadBackground(tiledMap);
             //Image image = Raylib.LoadImage("");
             //image.
@@ -86,6 +90,18 @@ namespace Merlin2d.Game
                 {
                     backgroundTiles[x, y] = new BackgroundTile(x * tiledMap.TileWidth, y * tiledMap.TileHeight,
                         tiledMap.Layers["background"].Tiles.Single(tile => tile.X == x && tile.Y == y).Gid);
+                }
+            }
+        }
+
+        private void LoadActors(TmxMap tiledMap)
+        {
+            ActorData = new List<ActorData>();
+            foreach(TmxObjectGroup groups in tiledMap.ObjectGroups)
+            {
+                foreach (TmxObject entry in groups.Objects)
+                {
+                    ActorData.Add(new ActorData(entry));
                 }
             }
         }

@@ -4,11 +4,8 @@ using System.Text;
 
 namespace Merlin2d.Game.Actions
 {
-    public interface Action<T>
+    public interface IAction<T>
     {
-
-        public String GetActionName();
-
         public void Execute(T t);
 
     }

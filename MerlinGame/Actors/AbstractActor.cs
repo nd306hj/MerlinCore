@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Merlin2d.Game;
+using Merlin2d.Game.Actors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Merlin2d.Game.Actors
+namespace MerlinGame.Actors
 {
     public abstract class AbstractActor : IActor
     {    // VARIABLES

@@ -13,14 +13,19 @@ namespace MerlinGame
         static void Main(string[] args)
         {
             GameContainer container = new GameContainer("Remorseless winter", 1000, 800);
-            container.SetMap("resources/maps/basicTest.tmx");
-            IActor actor = new DummyActor();
-            actor.SetPosition(100, 100);
+            container.GetWorld().SetFactory(new ActorFactory());
+            container.GetWorld().SetMap("resources/maps/basicTest.tmx");
+            //IActor actor = new DummyActor();
+            //actor.SetPosition(100, 100);
             //Animation animation = new Animation("resources/demo.png", 64, 64);
             //animation.Start();
             //actor.SetAnimation(animation);
             //container.AddActor(actor);
             container.GetWorld().SetPhysics(new Gravity());
+            container.GetWorld().AddInitAction(world =>
+            {
+                world.CenterOn(world.GetActors().Find(a => a.GetName() == "actor"));
+            });
             container.Run();
             //var a = container.GetWorld().GetActors().Where(x => x.GetName().Equals("aaa"));
             //List<int> values = new List<int>();

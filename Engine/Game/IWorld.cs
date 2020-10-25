@@ -1,4 +1,5 @@
-﻿using Merlin2d.Game.Actors;
+﻿using Merlin2d.Game.Actions;
+using Merlin2d.Game.Actors;
 using Merlin2d.Game.Items;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Merlin2d.Game
 
         void ShowInventory(Inventory inventory);
         void SetFactory(IFactory factory);
-        void SetScenario(Scenario scenario);
+        void AddInitAction(Action<IWorld> action);
         void SetMap(string path);
         void SetPhysics(IPhysics physics);
     }

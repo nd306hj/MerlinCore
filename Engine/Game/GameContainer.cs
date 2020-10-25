@@ -29,6 +29,8 @@ namespace Merlin2d.Game
         private int width;
         private int height;
 
+        private Camera2D camera;
+
         public GameContainer(string title, int width, int height)
         {
             this.width = width;
@@ -36,7 +38,7 @@ namespace Merlin2d.Game
             Raylib.InitWindow(width, height, title);
             Raylib.SetTargetFPS(60);
             gameWorld = new GameWorld(width, height);
-
+            camera = new Camera2D();
             Input.GetInstance();
         }
 
@@ -52,21 +54,15 @@ namespace Merlin2d.Game
             //newGame.SetFactory(factory);
         }
 
-        private void SetScenario(Scenario scenario)
-        {
-            this.scenario = scenario;
-            //newGame.SetScenario(scenario);
-        }
-
         private void SetPhysics(IPhysics physics)
         {
-            this.physics = physics;
+            this.gameWorld.SetPhysics(physics);
             //newGame.SetPhysics(physics);
         }
 
-        public void SetMap(String path)
+        public void SetMap(string path)
         {
-            this.mapPath = path;
+            this.gameWorld.SetMap(path);
             //newGame.SetMap(mapPath);
 
         }
@@ -85,26 +81,21 @@ namespace Merlin2d.Game
 
         public void Run()
         {
-            if (mapPath != null)
-            {
-                this.gameWorld.SetMap(mapPath);
-            }
-
-            if (physics != null)
-            {
-                this.gameWorld.SetPhysics(physics);
-            }
+            camera.zoom = 1.0f;
+            gameWorld.SetCamera(camera);
+            gameWorld.Initialize();
 
 
             long index = 0;
             while (!Raylib.WindowShouldClose())
             {
-                Raylib.BeginDrawing();
-                Raylib.ClearBackground(Raylib_cs.Color.BLACK);
-                //Raylib.DrawText("Hello, world!", 12, 12, 20, Color.BLACK);
                 gameWorld.Update(index++);
-                gameWorld.Render(this);
 
+                Raylib.BeginDrawing();
+                Raylib.BeginMode2D(camera);
+                Raylib.ClearBackground(Raylib_cs.Color.BLACK);
+                gameWorld.Render(this);
+                Raylib.EndMode2D();
                 Raylib.EndDrawing();
 
             }
