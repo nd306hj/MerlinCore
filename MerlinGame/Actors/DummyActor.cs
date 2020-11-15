@@ -1,12 +1,13 @@
 ﻿using Merlin2d.Game;
 using Merlin2d.Game.Actors;
+using Merlin2d.Game.Items;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MerlinGame.Actors
 {
-    public class DummyActor : AbstractActor
+    public class DummyActor : AbstractActor, IItem
     {
         private int counter = 0;
         private int i = 0;

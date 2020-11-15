@@ -5,7 +5,7 @@ using Merlin2d.Game.Actors;
 
 namespace Merlin2d.Game.Items
 {
-    public interface Item : IActor
+    public interface IItem : IActor
     {
 
     }

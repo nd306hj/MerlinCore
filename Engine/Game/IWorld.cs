@@ -24,7 +24,7 @@ namespace Merlin2d.Game
 
         void CenterOn(IActor actor);
 
-        void ShowInventory(Inventory inventory);
+        void ShowInventory(IInventory inventory);
         void SetFactory(IFactory factory);
         void AddInitAction(Action<IWorld> action);
         void SetMap(string path);

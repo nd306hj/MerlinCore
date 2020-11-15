@@ -26,7 +26,7 @@ namespace Merlin2d.Game
         private List<IActor> triggers = new List<IActor>();
         private IActor centeredOn;
         private Message message;
-        private Inventory inventory;
+        private IInventory inventory;
         private Boolean debugGraphics = false;
         //private Class<? extends Actor>[] renderOrder;
         //private SlickWorld slickWorld;
@@ -36,6 +36,8 @@ namespace Merlin2d.Game
 
         private int width;
         private int height;
+
+        private static readonly int itemSize = 32;
 
         private List<Action<IWorld>> initActions = new List<Action<IWorld>>();
 
@@ -158,7 +160,7 @@ namespace Merlin2d.Game
             this.message = message;
         }
 
-        public void ShowInventory(Inventory inventory)
+        public void ShowInventory(IInventory inventory)
         {
             this.inventory = inventory;
         }
@@ -273,18 +275,21 @@ namespace Merlin2d.Game
         private void RenderInventory(GameContainer gc)
         {
             int x;
+            int offset = 4;
+            int y = gc.GetHeight() - itemSize - offset;
             if (this.inventory != null)
             {
-                x = 4;
+                x = offset;
 
 
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
                 //graphics.setColor(Color.BLACK);
                 //graphics.fillRect(0.0F, gc.GetHeight() - 24, gc.GetWidth(), gc.GetHeight());
-                foreach (Item item in this.inventory)
+                foreach (IItem item in this.inventory)
                 {
-                    item.GetAnimation().Render(x, gc.GetHeight() - 20, 16, 16);
-                    x += item.GetWidth() + 4;
+                    Raylib.DrawRectangleLinesEx(new Rectangle(x - offset, y - offset, itemSize + 2*offset, itemSize + 2*offset), offset, Raylib_cs.Color.BLUE);
+                    item.GetAnimation().Render(x, y, itemSize, itemSize);
+                    x += itemSize + offset;
                 }
 
                 //graphics.setColor(color);

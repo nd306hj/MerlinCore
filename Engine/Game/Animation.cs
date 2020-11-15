@@ -34,7 +34,11 @@ namespace Merlin2d.Game
         private Vector2 cameraFocus;
 
         private Rectangle[] frames;
-        
+
+        private bool renderSmall = true;
+
+        //private static readonly float inventorySize = 16.0f;
+
 
         public Animation(string resource, int width, int height, int frameDuration)
         {
@@ -100,50 +104,63 @@ namespace Merlin2d.Game
 
         internal void Render(int x, int y)
         {
-            if (isRunning)
-            {
-                if (time++ >= frameDuration)
-                {
-                    currentFrame += nextFrameStep;
-                    time = 0;
-                }
-                if (currentFrame >= framesCount)
-                {
-                    if (pingPong)
-                    {
-                        currentFrame = framesCount - 1;
-                        nextFrameStep = -1;
-                    }
-                    else
-                    {
-                        currentFrame = 0;
-                    }
-                    if (!looping)
-                    {
-                        Stop();
-                    }
-                }
-                else if (currentFrame < 0)
-                {
-                    currentFrame = 0;
-                    nextFrameStep = 1;
-                    if (!looping)
-                    {
-                        Stop();
-                    }
-                }
-                if (shouldStopAt && currentFrame == stopIndex)
-                {
-                    Stop();
-                }
-            }
-            Raylib.DrawTextureRec(texture, frames[currentFrame], new Vector2(x, y), Raylib_cs.Color.WHITE);
+            Render(x, y, 16, 16);
+            //if (isRunning)
+            //{
+            //    if (time++ >= frameDuration)
+            //    {
+            //        currentFrame += nextFrameStep;
+            //        time = 0;
+            //    }
+            //    if (currentFrame >= framesCount)
+            //    {
+            //        if (pingPong)
+            //        {
+            //            currentFrame = framesCount - 1;
+            //            nextFrameStep = -1;
+            //        }
+            //        else
+            //        {
+            //            currentFrame = 0;
+            //        }
+            //        if (!looping)
+            //        {
+            //            Stop();
+            //        }
+            //    }
+            //    else if (currentFrame < 0)
+            //    {
+            //        currentFrame = 0;
+            //        nextFrameStep = 1;
+            //        if (!looping)
+            //        {
+            //            Stop();
+            //        }
+            //    }
+            //    if (shouldStopAt && currentFrame == stopIndex)
+            //    {
+            //        Stop();
+            //    }
+            //}
+            //Raylib.DrawTextureRec(texture, frames[currentFrame], new Vector2(x, y), Raylib_cs.Color.WHITE);
         }
 
-        public void Render(int x, int y, int width, int height)
+        internal void Render(int x, int y, int width, int height)
         {
             //getSlickAnimation().draw(x, y, width, height);
-            throw new NotImplementedException();
+
+            if (!renderSmall)
+            {
+                Render(x, y);
+            }
+            else
+            {
+                float scaleX = width / (float)this.width;
+                float scaleY = height / (float)this.height;
+                float scale = scaleX > scaleY ? scaleX : scaleY;
+                Raylib.DrawTextureEx(texture, new Vector2(x, y), 0, scale, Raylib_cs.Color.WHITE);
+            }
+            //throw new NotImplementedException();
         }
 
         public void Stop()

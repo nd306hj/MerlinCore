@@ -5,15 +5,14 @@ using System.Text;
 
 namespace Merlin2d.Game.Items
 {
-    public interface Inventory : ICollection<Item>
+    public interface IInventory : IEnumerable<IItem>
     {
-        void AddItem(Item item);
+        IItem GetItem();
+        void AddItem(IItem item);
 
-        void RemoveItem(Item item);
+        void RemoveItem(IItem item);
 
         void RemoveItem(int index);
-
-        void DropAll();
 
         void ShiftLeft();
 
