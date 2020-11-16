@@ -8,12 +8,14 @@ namespace MerlinGame
 {
     class Backpack : IInventory
     {
-        IItem[] items;
-        int position = 0;
+        private IItem[] items;
+        private int position = 0;
+        private int capacity;
 
-        public Backpack(int count)
+        public Backpack(int capacity)
         {
-            items = new IItem[count];
+            items = new IItem[capacity];
+            this.capacity = capacity;
         }
         public void AddItem(IItem item)
         {
@@ -23,6 +25,11 @@ namespace MerlinGame
         public void DropAll()
         {
             throw new NotImplementedException();
+        }
+
+        public int GetCapacity()
+        {
+            return capacity;
         }
 
         public IEnumerator<IItem> GetEnumerator()

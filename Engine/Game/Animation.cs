@@ -104,45 +104,44 @@ namespace Merlin2d.Game
 
         internal void Render(int x, int y)
         {
-            Render(x, y, 16, 16);
-            //if (isRunning)
-            //{
-            //    if (time++ >= frameDuration)
-            //    {
-            //        currentFrame += nextFrameStep;
-            //        time = 0;
-            //    }
-            //    if (currentFrame >= framesCount)
-            //    {
-            //        if (pingPong)
-            //        {
-            //            currentFrame = framesCount - 1;
-            //            nextFrameStep = -1;
-            //        }
-            //        else
-            //        {
-            //            currentFrame = 0;
-            //        }
-            //        if (!looping)
-            //        {
-            //            Stop();
-            //        }
-            //    }
-            //    else if (currentFrame < 0)
-            //    {
-            //        currentFrame = 0;
-            //        nextFrameStep = 1;
-            //        if (!looping)
-            //        {
-            //            Stop();
-            //        }
-            //    }
-            //    if (shouldStopAt && currentFrame == stopIndex)
-            //    {
-            //        Stop();
-            //    }
-            //}
-            //Raylib.DrawTextureRec(texture, frames[currentFrame], new Vector2(x, y), Raylib_cs.Color.WHITE);
+            if (isRunning)
+            {
+                if (time++ >= frameDuration)
+                {
+                    currentFrame += nextFrameStep;
+                    time = 0;
+                }
+                if (currentFrame >= framesCount)
+                {
+                    if (pingPong)
+                    {
+                        currentFrame = framesCount - 1;
+                        nextFrameStep = -1;
+                    }
+                    else
+                    {
+                        currentFrame = 0;
+                    }
+                    if (!looping)
+                    {
+                        Stop();
+                    }
+                }
+                else if (currentFrame < 0)
+                {
+                    currentFrame = 0;
+                    nextFrameStep = 1;
+                    if (!looping)
+                    {
+                        Stop();
+                    }
+                }
+                if (shouldStopAt && currentFrame == stopIndex)
+                {
+                    Stop();
+                }
+            }
+            Raylib.DrawTextureRec(texture, frames[currentFrame], new Vector2(x, y), Raylib_cs.Color.WHITE);
         }
 
         internal void Render(int x, int y, int width, int height)

@@ -280,6 +280,14 @@ namespace Merlin2d.Game
             if (this.inventory != null)
             {
                 x = offset;
+                for (int i = 0; i < inventory.GetCapacity(); i++)
+                {
+                    Raylib.DrawRectangleLinesEx(new Rectangle(x - offset, y - offset, itemSize + 2 * offset, itemSize + 2 * offset),
+                        offset, Raylib_cs.Color.LIGHTGRAY);
+                    x += itemSize + offset;
+                }
+
+                x = offset;
 
 
                 //throw new NotImplementedException();
@@ -287,7 +295,6 @@ namespace Merlin2d.Game
                 //graphics.fillRect(0.0F, gc.GetHeight() - 24, gc.GetWidth(), gc.GetHeight());
                 foreach (IItem item in this.inventory)
                 {
-                    Raylib.DrawRectangleLinesEx(new Rectangle(x - offset, y - offset, itemSize + 2*offset, itemSize + 2*offset), offset, Raylib_cs.Color.BLUE);
                     item.GetAnimation().Render(x, y, itemSize, itemSize);
                     x += itemSize + offset;
                 }

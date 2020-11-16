@@ -17,5 +17,6 @@ namespace Merlin2d.Game.Items
         void ShiftLeft();
 
         void ShiftRight();
+        int GetCapacity();
     }
 }
