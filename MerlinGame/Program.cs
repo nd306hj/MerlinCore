@@ -27,13 +27,17 @@ namespace MerlinGame
             //{
             //    world.CenterOn(world.GetActors().Find(a => a.GetName() == "actor"));
             //});
-            IInventory backpack = new Backpack(5);
-            backpack.AddItem(new DummyActor());
-            backpack.AddItem(new DummyActor());
-            IActor actor = new DummyActor();
-            actor.SetPosition(100, 100);
-            container.GetWorld().ShowInventory(backpack);
-            container.GetWorld().AddInitAction(w => w.AddActor(actor));
+            //IInventory backpack = new Backpack(5);
+            //backpack.AddItem(new DummyActor());
+            //backpack.AddItem(new DummyActor());
+
+            //container.GetWorld().ShowInventory(backpack);
+            container.GetWorld().AddInitAction(w =>
+            {
+                IActor actor = new DummyActor();
+                actor.SetPosition(100, 100);
+                w.AddActor(actor);
+            });
             container.Run();
             //var a = container.GetWorld().GetActors().Where(x => x.GetName().Equals("aaa"));
             //List<int> values = new List<int>();

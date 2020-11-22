@@ -19,9 +19,10 @@ namespace MerlinGame.Actors
 
         public override void Update()
         {
-            if (counter++ % 60 == 0)
+            if (counter++ % 600 == 120)
             {
                 Console.WriteLine("{0}", i);
+                this.RemoveFromWorld();
             }
         }
 

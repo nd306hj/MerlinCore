@@ -97,10 +97,7 @@ namespace Merlin2d.Game
                 gameWorld.Render(this);
                 Raylib.EndMode2D();
                 Raylib.EndDrawing();
-
             }
-
-
         }
 
         public void ShowMessage(Message message)

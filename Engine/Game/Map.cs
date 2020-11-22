@@ -31,13 +31,10 @@ namespace Merlin2d.Game
         public Map(string mapResource)
         {
             TmxMap tiledMap = new TmxMap(mapResource);
-            //tiledMap.
             Width = tiledMap.Width;
             Height = tiledMap.Height;
-            //TileWidth = tiledMap.Width;
-            //TileHeight = tiledMap.Height;
-            TileWidth = 16;
-            TileHeight = 16;
+            TileWidth = tiledMap.TileWidth;
+            TileHeight = tiledMap.TileHeight;
             LoadWalls(tiledMap);
             LoadBackground(tiledMap);
             LoadActors(tiledMap);

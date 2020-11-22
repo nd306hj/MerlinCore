@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Merlin2d.Game
 {
-    public class Animation : IDisposable
+    public class Animation
     {
 
         private Texture2D texture;//= Raylib.LoadTexture("resources/raylib-cs_logo.png");
@@ -37,11 +37,14 @@ namespace Merlin2d.Game
 
         private bool renderSmall = true;
 
+        private static int objectCount = 0;
+
         //private static readonly float inventorySize = 16.0f;
 
 
         public Animation(string resource, int width, int height, int frameDuration)
         {
+            objectCount++;
             this.resource = resource;
             this.width = width;
             this.height = height;
@@ -70,6 +73,16 @@ namespace Merlin2d.Game
                 frames[i] = new Rectangle(i * width, 0, width, height);
             }
 
+        }
+
+        ~Animation()
+        {
+            objectCount--;
+        }
+
+        internal void UnloadTexture()
+        {
+            Raylib.UnloadTexture(texture);
         }
 
         public Animation(string resource, int width, int height) : this(resource, width, height, 10)
@@ -228,36 +241,6 @@ namespace Merlin2d.Game
                 frames[i].width = -frames[i].width;
             }
 
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects)
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                Raylib.UnloadTexture(texture);
-                disposedValue = true;
-            }
-        }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~Animation()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
     }
 }

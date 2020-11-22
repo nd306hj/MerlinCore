@@ -56,6 +56,7 @@ namespace Merlin2d.Game
             }
 
             initActions.ForEach(a => a(this));
+            initActions.Clear();
         }
 
         public void SetMap(string resource)
@@ -201,7 +202,15 @@ namespace Merlin2d.Game
             triggers.ForEach(trigger => trigger.Update());
             actors.ForEach(actor => actor.Update());
 
-            actors.RemoveAll(actor => actor.RemovedFromWorld());
+            actors.RemoveAll(actor =>
+            {
+                if (actor.RemovedFromWorld())
+                {
+                    actor.GetAnimation().UnloadTexture();
+                    return true;
+                }
+                return false;
+            });
             if (gameLevelPhysics != null)
             {
                 gameLevelPhysics.Execute();
