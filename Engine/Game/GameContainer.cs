@@ -4,6 +4,7 @@ using Merlin2d.Game.Items;
 using Raylib_cs;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 
 namespace Merlin2d.Game
@@ -82,7 +83,7 @@ namespace Merlin2d.Game
         public void Run()
         {
             camera.zoom = 1.0f;
-            gameWorld.SetCamera(camera);
+            //gameWorld.SetCamera(camera);
             gameWorld.Initialize();
 
 
@@ -91,18 +92,28 @@ namespace Merlin2d.Game
             {
                 gameWorld.Update(index++);
 
+                IActor centered = gameWorld.GetCenteredActor();
+                if (centered != null)
+                {
+                    camera.offset = new Vector2(width / 2, height / 2);
+                    camera.target = new Vector2(centered.GetX(), centered.GetY());
+                    //graphics.translate(getXOffset(gc), getYOffset(gc));
+                }
+
                 Raylib.BeginDrawing();
                 Raylib.BeginMode2D(camera);
                 Raylib.ClearBackground(Raylib_cs.Color.BLACK);
                 gameWorld.Render(this);
                 Raylib.EndMode2D();
+
+                gameWorld.RenderOverlay(this);
                 Raylib.EndDrawing();
             }
         }
 
         public void ShowMessage(Message message)
         {
-            gameWorld.ShowMessage(message);
+            gameWorld.AddMessage(message);
         }
 
         public int GetWidth()

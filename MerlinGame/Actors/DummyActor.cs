@@ -19,10 +19,15 @@ namespace MerlinGame.Actors
 
         public override void Update()
         {
-            if (counter++ % 600 == 120)
+            //if (counter++ % 600 == 120)
+            //{
+            //    Console.WriteLine("{0}", i);
+            //    this.RemoveFromWorld();
+            //}
+
+            if (Input.GetInstance().IsKeyPressed(Input.Key.A))
             {
-                Console.WriteLine("{0}", i);
-                this.RemoveFromWorld();
+                GetWorld().AddMessage(new Message("aaa", 100, 100, 20, Color.Blue, MessageDuration.Short));
             }
         }
 

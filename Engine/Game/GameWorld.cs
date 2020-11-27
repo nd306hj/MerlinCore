@@ -25,14 +25,14 @@ namespace Merlin2d.Game
         private List<IActor> actorsToAdd = new List<IActor>();
         private List<IActor> triggers = new List<IActor>();
         private IActor centeredOn;
-        private Message message;
+        private List<IMessage> messages;
         private IInventory inventory;
         private Boolean debugGraphics = false;
         //private Class<? extends Actor>[] renderOrder;
         //private SlickWorld slickWorld;
         private IPhysics gameLevelPhysics;
 
-        private Camera2D camera;
+        //private Camera2D camera;
 
         private int width;
         private int height;
@@ -45,7 +45,8 @@ namespace Merlin2d.Game
         {
             this.width = width;
             this.height = height;
-            camera.offset = new Vector2(width / 2, height / 2);
+            //camera.offset = new Vector2(width / 2, height / 2);
+            this.messages = new List<IMessage>();
         }
 
         internal void Initialize()
@@ -68,6 +69,10 @@ namespace Merlin2d.Game
         {
             this.actors.Clear();
             tiledMap = new Map(this.mapResource);
+            if (actors.Count != 0)
+            {
+                Console.WriteLine("Manually added actors removed, use AddInitAction to manually add actors for debug.");
+            }
             actors.Clear();
             actorsToAdd.Clear();
             if (factory != null)
@@ -85,10 +90,10 @@ namespace Merlin2d.Game
             this.factory = factory;
         }
 
-        internal void SetCamera(Camera2D camera)
-        {
-            this.camera = camera;
-        }
+        //internal void SetCamera(Camera2D camera)
+        //{
+        //    this.camera = camera;
+        //}
 
         public void AddInitAction(Action<IWorld> action)
         {
@@ -107,6 +112,11 @@ namespace Merlin2d.Game
         public void CenterOn(IActor actor)
         {
             this.centeredOn = actor;
+        }
+
+        internal IActor GetCenteredActor()
+        {
+            return this.centeredOn;
         }
 
 
@@ -156,9 +166,14 @@ namespace Merlin2d.Game
             actor.RemoveFromWorld();
         }
 
-        public void ShowMessage(Message message)
+        public void AddMessage(IMessage message)
         {
-            this.message = message;
+            this.messages.Add(message);
+        }
+
+        public void RemoveMessage(IMessage message)
+        {
+            this.messages.Remove(message);
         }
 
         public void ShowInventory(IInventory inventory)
@@ -201,16 +216,17 @@ namespace Merlin2d.Game
 
             triggers.ForEach(trigger => trigger.Update());
             actors.ForEach(actor => actor.Update());
+            actors.RemoveAll(actor => actor.RemovedFromWorld());
 
-            actors.RemoveAll(actor =>
-            {
-                if (actor.RemovedFromWorld())
-                {
-                    actor.GetAnimation().UnloadTexture();
-                    return true;
-                }
-                return false;
-            });
+            //actors.RemoveAll(actor =>
+            //{
+            //    if (actor.RemovedFromWorld())
+            //    {
+            //        actor.GetAnimation().UnloadTexture();
+            //        return true;
+            //    }
+            //    return false;
+            //});
             if (gameLevelPhysics != null)
             {
                 gameLevelPhysics.Execute();
@@ -224,11 +240,7 @@ namespace Merlin2d.Game
 
         internal void Render(GameContainer gc)
         {
-            if (this.centeredOn != null)
-            {
-                camera.target = new Vector2(centeredOn.GetX(), centeredOn.GetY());
-                //graphics.translate(getXOffset(gc), getYOffset(gc));
-            }
+
             if (tiledMap != null)
             {
                 RenderMap();
@@ -236,9 +248,13 @@ namespace Merlin2d.Game
 
             RenderActors(this.actors);
             RenderActors(this.triggers);
-            RenderInventory(gc);
 
-            RenderMessage();
+        }
+
+        internal void RenderOverlay(GameContainer gc)
+        {
+            RenderInventory(gc);
+            RenderMessages();
         }
 
         private void RenderMap()
@@ -314,13 +330,15 @@ namespace Merlin2d.Game
             }
         }
 
-        private void RenderMessage()
+        private void RenderMessages()
         {
-            if (this.message != null)
+            messages.ForEach(message =>
             {
                 Raylib.DrawText(message.GetText(), message.GetX(), message.GetY(),
                                 message.GetFontSize(), message.GetColor());
-            }
+            });
+
+            messages.RemoveAll(message => message.RemainingTime() <= 0);
         }
 
         public List<IActor> GetActors()

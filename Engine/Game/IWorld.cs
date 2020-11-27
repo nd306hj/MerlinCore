@@ -15,7 +15,8 @@ namespace Merlin2d.Game
         //IEnumerator<Actor> GetEnumerator();
         Boolean IntersectWithWall(IActor actor);
         List<IActor> GetActors();
-        void ShowMessage(Message message);
+        void AddMessage(IMessage message);
+        void RemoveMessage(IMessage message);
         bool IsWall(int x, int y);
         void SetWall(int x, int y, Boolean wall);
 

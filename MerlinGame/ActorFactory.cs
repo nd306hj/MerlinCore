@@ -12,7 +12,7 @@ namespace MerlinGame
         public IActor Create(string actorType, string actorName, int x, int y)
         {
             IActor actor = null;
-            if (actorType == "DummyActor")
+            // if (actorType == "DummyActor")
             {
                 actor = new DummyActor();
                 actor.SetName(actorName);

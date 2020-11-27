@@ -23,7 +23,6 @@ namespace Merlin2d.Game
         private bool isRunning = false;
         private bool shouldStopAt = false;
         private bool isFlipped = false;
-        private bool disposedValue;
 
         private int currentFrame = 0;
         private int framesCount;
@@ -31,7 +30,6 @@ namespace Merlin2d.Game
         private int stopIndex = 0;
 
         private int nextFrameStep = 1;
-        private Vector2 cameraFocus;
 
         private Rectangle[] frames;
 
@@ -80,7 +78,7 @@ namespace Merlin2d.Game
             objectCount--;
         }
 
-        internal void UnloadTexture()
+        public void UnloadTexture()
         {
             Raylib.UnloadTexture(texture);
         }
