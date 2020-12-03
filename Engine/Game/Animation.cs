@@ -13,6 +13,7 @@ namespace Merlin2d.Game
     {
 
         private Texture2D texture;//= Raylib.LoadTexture("resources/raylib-cs_logo.png");
+        private Texture2D textureFirstFrame;
         private string resource;
         private int width;
         private int height;
@@ -47,6 +48,8 @@ namespace Merlin2d.Game
             this.width = width;
             this.height = height;
             this.frameDuration = frameDuration;
+            
+            
 
             if (!System.IO.File.Exists(resource))
             {
@@ -54,7 +57,10 @@ namespace Merlin2d.Game
                     String.Format("Error while loading spritesheet: {0} not found.", resource));
             }
 
-            texture = Raylib.LoadTexture(resource);
+            Image image = Raylib.LoadImage(resource);
+            texture = Raylib.LoadTextureFromImage(image);
+
+
 
             if (texture.height != height || texture.width % width != 0)
             {
@@ -70,6 +76,10 @@ namespace Merlin2d.Game
             {
                 frames[i] = new Rectangle(i * width, 0, width, height);
             }
+
+            Raylib.ImageCrop(ref image, frames[0]);
+            textureFirstFrame = Raylib.LoadTextureFromImage(image);
+            Raylib.UnloadImage(image);
 
         }
 
@@ -168,7 +178,7 @@ namespace Merlin2d.Game
                 float scaleX = width / (float)this.width;
                 float scaleY = height / (float)this.height;
                 float scale = scaleX > scaleY ? scaleX : scaleY;
-                Raylib.DrawTextureEx(texture, new Vector2(x, y), 0, scale, Raylib_cs.Color.WHITE);
+                Raylib.DrawTextureEx(textureFirstFrame, new Vector2(x, y), 0, scale, Raylib_cs.Color.WHITE);
             }
             //throw new NotImplementedException();
         }

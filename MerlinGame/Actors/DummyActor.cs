@@ -14,7 +14,10 @@ namespace MerlinGame.Actors
 
         public DummyActor()
         {
-            SetAnimation(new Animation("resources/sprites/default.png", 128, 128));
+            Animation animation = new Animation("resources/sprites/default.png", 128, 128);
+            animation.Start();
+            SetAnimation(animation);
+
         }
 
         public override void Update()

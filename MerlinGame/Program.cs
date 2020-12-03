@@ -27,11 +27,11 @@ namespace MerlinGame
             //{
             //    world.CenterOn(world.GetActors().Find(a => a.GetName() == "actor"));
             //});
-            //IInventory backpack = new Backpack(5);
-            //backpack.AddItem(new DummyActor());
-            //backpack.AddItem(new DummyActor());
+            IInventory backpack = new Backpack(5);
+            backpack.AddItem(new DummyActor());
+            backpack.AddItem(new DummyActor());
 
-            //container.GetWorld().ShowInventory(backpack);
+            container.GetWorld().ShowInventory(backpack);
             container.GetWorld().AddInitAction(w =>
             {
                 IActor actor = new DummyActor();
