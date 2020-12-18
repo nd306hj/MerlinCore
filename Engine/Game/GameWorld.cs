@@ -1,5 +1,6 @@
 ﻿using Merlin2d.Game.Actions;
 using Merlin2d.Game.Actors;
+using Merlin2d.Game.Enums;
 using Merlin2d.Game.Exceptions;
 using Merlin2d.Game.Items;
 using Raylib_cs;
@@ -31,6 +32,8 @@ namespace Merlin2d.Game
         //private Class<? extends Actor>[] renderOrder;
         //private SlickWorld slickWorld;
         private IPhysics gameLevelPhysics;
+        private Func<IWorld, MapStatus> endCondition = null;
+
 
         //private Camera2D camera;
 
@@ -209,7 +212,7 @@ namespace Merlin2d.Game
             actorsToAdd.Clear();
         }
 
-        internal void Update(long i)
+        internal MapStatus Update()
         {
             AddActors();
 
@@ -231,6 +234,8 @@ namespace Merlin2d.Game
             {
                 gameLevelPhysics.Execute();
             }
+
+            return endCondition?.Invoke(this) ?? MapStatus.Unfinished;
         }
 
         //public void setRenderOrder(Class<? extends Actor>...actorClasses)
@@ -356,6 +361,15 @@ namespace Merlin2d.Game
         public int GetTileHeight()
         {
             return this.tiledMap.TileHeight;
+        }
+
+        /// <summary>
+        /// Sets a custom function - condition to end the level
+        /// </summary>
+        /// <param name="condition">Anonymous function which evaluates the state and returns on of the three possible outcomes defined in MapStatus</param>
+        public void SetEndCondition(Func<IWorld, MapStatus> condition)
+        {
+            endCondition = condition;
         }
     }
 }

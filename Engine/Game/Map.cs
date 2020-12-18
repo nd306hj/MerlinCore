@@ -38,11 +38,6 @@ namespace Merlin2d.Game
             LoadWalls(tiledMap);
             LoadBackground(tiledMap);
             LoadActors(tiledMap);
-            //LoadBackground(tiledMap);
-            //Image image = Raylib.LoadImage("");
-            //image.
-            //Raylib.drawtextu
-            //textures[0] = Raylib.LoadTextureFromImage(image);
         }
 
         private void LoadWalls(TmxMap tiledMap)

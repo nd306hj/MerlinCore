@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Merlin2d.Game.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

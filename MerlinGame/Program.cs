@@ -1,5 +1,6 @@
 ﻿using Merlin2d.Game;
 using Merlin2d.Game.Actors;
+using Merlin2d.Game.Enums;
 using Merlin2d.Game.Items;
 using MerlinGame.Actors;
 using System;
@@ -13,16 +14,19 @@ namespace MerlinGame
     {
         static void Main(string[] args)
         {
-            GameContainer container = new GameContainer("Remorseless winter", 1000, 800);
+            GameContainer container = new GameContainer("Remorseless winter", 1000, 800, true);
             //container.GetWorld().SetFactory(new ActorFactory());
-            container.GetWorld().SetMap("resources/maps/untitled.tmx");
+            int index = container.AddWorld("resources/maps/demo1.tmx");
+
             //IActor actor = new DummyActor();
             //actor.SetPosition(100, 100);
             //Animation animation = new Animation("resources/demo.png", 64, 64);
             //animation.Start();
             //actor.SetAnimation(animation);
             //container.AddActor(actor);
-            container.GetWorld().SetPhysics(new Gravity());
+            container.GetWorld(index).SetPhysics(new Gravity());
+
+            container.AddWorld("resources/maps/basicTest.tmx");
             //container.GetWorld().AddInitAction(world =>
             //{
             //    world.CenterOn(world.GetActors().Find(a => a.GetName() == "actor"));
@@ -31,8 +35,8 @@ namespace MerlinGame
             backpack.AddItem(new DummyActor());
             backpack.AddItem(new DummyActor());
 
-            container.GetWorld().ShowInventory(backpack);
-            container.GetWorld().AddInitAction(w =>
+            container.GetWorld(0).ShowInventory(backpack);
+            container.GetWorld(0).AddInitAction(w =>
             {
                 IActor actor = new DummyActor();
                 actor.SetPosition(300, 500);
@@ -40,6 +44,16 @@ namespace MerlinGame
 
                 w.CenterOn(actor);
             });
+
+            container.GetWorld(0).SetEndCondition(world =>
+            {
+                Console.WriteLine("Map finished");
+                return MapStatus.Finished;
+            });
+            Message messageBad = new Message("Game over", 100, 100, 20, Color.Blue, MessageDuration.Short);
+            Message messageGood = new Message("You won!", 100, 100, 20, Color.Blue, MessageDuration.Short);
+            container.SetEndGameMessage(messageBad, false);
+            container.SetEndGameMessage(messageGood, true);
             container.Run();
             //var a = container.GetWorld().GetActors().Where(x => x.GetName().Equals("aaa"));
             //List<int> values = new List<int>();
@@ -48,5 +62,5 @@ namespace MerlinGame
 
             
         }
-    }
+}
 }

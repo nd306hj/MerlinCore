@@ -1,5 +1,6 @@
 ﻿using Merlin2d.Game.Actions;
 using Merlin2d.Game.Actors;
+using Merlin2d.Game.Enums;
 using Merlin2d.Game.Items;
 using System;
 using System.Collections.Generic;
@@ -30,5 +31,7 @@ namespace Merlin2d.Game
         void AddInitAction(Action<IWorld> action);
         void SetMap(string path);
         void SetPhysics(IPhysics physics);
+
+        void SetEndCondition(Func<IWorld, MapStatus> condition);
     }
 }

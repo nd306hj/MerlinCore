@@ -1,5 +1,6 @@
 ﻿using Merlin2d.Game.Actions;
 using Merlin2d.Game.Actors;
+using Merlin2d.Game.Enums;
 using Merlin2d.Game.Items;
 using Raylib_cs;
 using System;
@@ -12,108 +13,191 @@ namespace Merlin2d.Game
     public class GameContainer : IDisposable
     {
 
-        //public static int stateID = 1;
-        //private SlickAppGameContainer container;
-        //private Input input;
-
-        private IFactory factory;
-        private Scenario scenario;
-        private IPhysics physics;
-        private string mapPath = null;
-
-        private int currentGameStateID = 1;
-
-        private GameWorld gameWorld;
-        //private NewGame newGame;
-        private bool disposedValue;
+        private bool usesMultipleWorlds;
+        private int currentWorldIndex = 0;
+        private List<GameWorld> gameWorlds;
+        private GameWorld currentWorld;
 
         private int width;
         private int height;
 
         private Camera2D camera;
+        private float cameraZoomLevel = 1.0f;
 
-        public GameContainer(string title, int width, int height)
+        private IMessage winMessage;
+        private IMessage failMessage;
+
+        private bool disposedValue;
+
+
+        public GameContainer(string title, int width, int height) : this(title, width, height, false)
+        {
+
+        }
+
+        public GameContainer(string title, int width, int height, bool usesMultipleWorlds)
         {
             this.width = width;
             this.height = height;
+            this.usesMultipleWorlds = usesMultipleWorlds;
             Raylib.InitWindow(width, height, title);
             Raylib.SetTargetFPS(60);
-            gameWorld = new GameWorld(width, height);
+            gameWorlds = new List<GameWorld>();
+            if (!usesMultipleWorlds)
+            {
+                currentWorld = new GameWorld(width, height);
+                gameWorlds.Add(currentWorld);
+            }
             camera = new Camera2D();
             Input.GetInstance();
         }
 
+        /// <summary>
+        /// Creates a new map from the resource and adds it into the container. Works only if the container uses multiple worlds.
+        /// </summary>
+        /// <param name="mapSource">Path to the tiled map (.tmx)</param>
+        /// <returns>Index of the new world.</returns>
+        public int AddWorld(string mapSource)
+        {
+            CheckMapMode(true);
+            GameWorld world = new GameWorld(width, height);
+            world.SetMap(mapSource);
+            gameWorlds.Add(world);
+            return gameWorlds.Count - 1;
+        }
+
         public void AddActor(IActor actor)
         {
-            GetWorld().AddActor(actor);
+            CheckMapMode(false);
+            currentWorld.AddActor(actor);
 
         }
 
         private void SetFactory(IFactory factory)
         {
-            this.factory = factory;
+            //this.factory = factory;
             //newGame.SetFactory(factory);
         }
 
         private void SetPhysics(IPhysics physics)
         {
-            this.gameWorld.SetPhysics(physics);
+            this.GetWorld().SetPhysics(physics);
             //newGame.SetPhysics(physics);
         }
 
         public void SetMap(string path)
         {
-            this.gameWorld.SetMap(path);
+            CheckMapMode(false);
+            this.GetWorld().SetMap(path);
             //newGame.SetMap(mapPath);
 
         }
 
-        public void RemoveActor(IActor actor)
+        /// <summary>
+        /// Sets the camera's zoom.
+        /// </summary>
+        /// <param name="zoomLevel">Camera zoom - 1.0f is default value</param>
+        public void SetCameraZoom(float zoomLevel)
         {
-            //    GameState state = getCurrentState();
-            //    if (state instanceof World) {
-            //        ((World)state).removeActor(actor);
-            //    }
-            //else
-            //    {
-            //        ((World)getState(stateID)).removeActor(actor);
-            //    }
+            cameraZoomLevel = zoomLevel;
         }
 
         public void Run()
         {
-            camera.zoom = 1.0f;
+            camera.zoom = cameraZoomLevel;
             //gameWorld.SetCamera(camera);
-            gameWorld.Initialize();
+            currentWorldIndex = 0;
+            currentWorld = gameWorlds[currentWorldIndex];
+            currentWorld.Initialize();
+            bool isRunning = true;
+            MapStatus status = MapStatus.Unfinished;
 
-
-            long index = 0;
             while (!Raylib.WindowShouldClose())
             {
-                gameWorld.Update(index++);
 
-                IActor centered = gameWorld.GetCenteredActor();
-                if (centered != null)
+                if (isRunning)
                 {
-                    camera.offset = new Vector2(width / 2, height / 2);
-                    camera.target = new Vector2(centered.GetX(), centered.GetY());
-                    //graphics.translate(getXOffset(gc), getYOffset(gc));
+                    status = Run(currentWorld);
                 }
 
-                Raylib.BeginDrawing();
-                Raylib.BeginMode2D(camera);
-                Raylib.ClearBackground(Raylib_cs.Color.BLACK);
-                gameWorld.Render(this);
-                Raylib.EndMode2D();
-
-                gameWorld.RenderOverlay(this);
-                Raylib.EndDrawing();
+                if (status == MapStatus.Finished)
+                {
+                    if (currentWorldIndex < gameWorlds.Count - 1)
+                    {
+                        currentWorld = gameWorlds[++currentWorldIndex];
+                        currentWorld.Initialize();
+                    }
+                    else
+                    {
+                        isRunning = false;
+                        RenderEndGame(winMessage);
+                    }
+                }
+                else if (status == MapStatus.Failed)
+                {
+                    isRunning = false;
+                    RenderEndGame(failMessage);
+                }
             }
         }
 
-        public void ShowMessage(Message message)
+        private MapStatus Run(GameWorld gameWorld)
         {
-            gameWorld.AddMessage(message);
+
+            var status = gameWorld.Update();
+
+            IActor centered = gameWorld.GetCenteredActor();
+            if (centered != null)
+            {
+                camera.offset = new Vector2(width / 2, height / 2);
+                camera.target = new Vector2(centered.GetX(), centered.GetY());
+                //graphics.translate(getXOffset(gc), getYOffset(gc));
+            }
+
+            Raylib.BeginDrawing();
+            Raylib.BeginMode2D(camera);
+            Raylib.ClearBackground(Raylib_cs.Color.BLACK);
+            gameWorld.Render(this);
+            Raylib.EndMode2D();
+
+            gameWorld.RenderOverlay(this);
+            Raylib.EndDrawing();
+
+            return status;
+        }
+
+        private void RenderEndGame(IMessage message)
+        {
+            Raylib.BeginDrawing();
+            Raylib.ClearBackground(Raylib_cs.Color.BLACK);
+            if (message != null)
+            {
+                Raylib.DrawText(message.GetText(), message.GetX(), message.GetY(),
+                    message.GetFontSize(), message.GetColor());
+            }
+            Raylib.EndDrawing();
+        }
+
+        /// <summary>
+        /// Sets message to be displayed at the end of the game.
+        /// </summary>
+        /// <param name="message">Message to be displayed</param>
+        /// <param name="hasWon">Indicates whether it is a failure or win message</param>
+        public void SetEndGameMessage(IMessage message, bool hasWon)
+        {
+            if (hasWon)
+            {
+                winMessage = message;
+            }
+            else
+            {
+                failMessage = message;
+            }
+        }
+
+        internal void ShowMessage(Message message)
+        {
+            GetWorld().AddMessage(message);
         }
 
         public int GetWidth()
@@ -126,10 +210,46 @@ namespace Merlin2d.Game
             return this.height;
         }
 
+        /// <summary>
+        /// Used to access active world.
+        /// </summary>
+        /// <returns>Active World.</returns>
         public IWorld GetWorld()
         {
-            return this.gameWorld;
+            return currentWorld;
         }
+
+        /// <summary>
+        /// Used to access world with the given index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>World with the given index.</returns>
+        public IWorld GetWorld(int index)
+        {
+            CheckMapMode(true);
+            return gameWorlds[index];
+        }
+
+        private bool CheckMapMode(bool isMultiMap)
+        {
+            if (isMultiMap != usesMultipleWorlds)
+            {
+                throw new InvalidOperationException("The container is set to invalid map mode!");
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Since the collection itself is not exposed, it is necessary to somehow know the number of worlds stored in the container.
+        /// </summary>
+        /// <returns>Number of worlds prepared in the container</returns>
+        public int GetWorldCount()
+        {
+
+            return gameWorlds.Count;
+        }
+
 
         protected virtual void Dispose(bool disposing)
         {

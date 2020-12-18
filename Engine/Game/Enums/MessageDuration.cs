@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin2d.Game
+namespace Merlin2d.Game.Enums
 {
     public enum MessageDuration
     {
