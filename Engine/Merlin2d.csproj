@@ -10,9 +10,9 @@
     <Company>TUKE</Company>
     <Description>Core classes of project.merlin ported into C#</Description>
     <SignAssembly>false</SignAssembly>
-    <AssemblyVersion>2.3.0</AssemblyVersion>
-    <FileVersion>2.3.0</FileVersion>
-    <Version>2.3.0</Version>
+    <AssemblyVersion>2.3.1</AssemblyVersion>
+    <FileVersion>2.3.1</FileVersion>
+    <Version>2.3.1</Version>
     <PackageId>MerlinCore</PackageId>
     <NeutralLanguage>en-150</NeutralLanguage>
     <PackageProjectUrl>https://gitlab.cit.fei.tuke.sk/lh751fz/pvjcs20/-/wikis/home</PackageProjectUrl>
