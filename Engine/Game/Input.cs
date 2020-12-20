@@ -6,7 +6,7 @@ using System.Text;
 using static Raylib_cs.KeyboardKey;
 using static Raylib_cs.Raylib;
 
-namespace Merlin2d.Game.Enums
+namespace Merlin2d.Game
 {
     public class Input
     {

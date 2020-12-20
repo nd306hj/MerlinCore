@@ -216,6 +216,7 @@ namespace Merlin2d.Game
         /// <returns>Active World.</returns>
         public IWorld GetWorld()
         {
+            CheckMapMode(false);
             return currentWorld;
         }
 
@@ -246,7 +247,7 @@ namespace Merlin2d.Game
         /// <returns>Number of worlds prepared in the container</returns>
         public int GetWorldCount()
         {
-
+            CheckMapMode(true);
             return gameWorlds.Count;
         }
 
