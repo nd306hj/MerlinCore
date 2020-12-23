@@ -59,7 +59,15 @@ namespace Merlin2d.Game
                 LoadMap();
             }
 
-            initActions.ForEach(a => a(this));
+            initActions.ForEach(a =>
+            {
+                a(this);
+                if (actorsToAdd.Count != 0)
+                {
+                    Console.WriteLine("Actors added within initialization - acceptable for debug only, put them into .tmx object layer for the final submission!");
+                    AddActors();
+                }
+            });
             initActions.Clear();
         }
 
