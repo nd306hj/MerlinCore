@@ -39,6 +39,7 @@ namespace Merlin2d.Game
 
         private int width;
         private int height;
+        private bool isLoaded = false;
 
         private static readonly int itemSize = 32;
 
@@ -61,6 +62,7 @@ namespace Merlin2d.Game
 
             initActions.ForEach(a => a(this));
             initActions.Clear();
+            isLoaded = true;
         }
 
         public void SetMap(string resource)
@@ -348,7 +350,14 @@ namespace Merlin2d.Game
 
         public List<IActor> GetActors()
         {
-            return actors;
+            if (isLoaded)
+            {
+                return actors.ToList();
+            }else
+            {
+                throw new WorldNotInitializedException(
+                    "The instance of GameWorld has not yet been initialized. Used AddInitAction to initialize actors.");
+            }
         }
 
 
