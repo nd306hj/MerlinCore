@@ -11,7 +11,7 @@
     <Description>Core classes of project.merlin ported into C#</Description>
     <SignAssembly>false</SignAssembly>
     <AssemblyVersion>2.3.2</AssemblyVersion>
-    <FileVersion>2.3.1</FileVersion>
+    <FileVersion>2.3.2</FileVersion>
     <Version>2.3.2</Version>
     <PackageId>MerlinCore</PackageId>
     <NeutralLanguage>en-150</NeutralLanguage>
