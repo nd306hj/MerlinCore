@@ -1,4 +1,5 @@
-﻿using Merlin2d.Game.Enums;
+﻿using Merlin2d.Game.Actors;
+using Merlin2d.Game.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,8 @@ namespace Merlin2d.Game
         private int duration;
         private Color color;
         private MessageDuration initialDuration;
+        private IActor anchor = null;
+        private bool isAnchored = false;
 
         public Message(string text, int x, int y, int fontSize, Color color, MessageDuration messageDuration)
         {
@@ -44,12 +47,12 @@ namespace Merlin2d.Game
 
         public int GetX()
         {
-            return this.x;
+            return this.x + (isAnchored ? anchor.GetX() : 0);
         }
 
         public int GetY()
         {
-            return this.y;
+            return this.y + (isAnchored ? anchor.GetY() : 0);
         }
 
         public Color GetColor()
@@ -72,6 +75,17 @@ namespace Merlin2d.Game
             {
                 return 1;
             }
+        }
+
+        public void SetAnchorPoint(IActor actor)
+        {
+            anchor = actor;
+            isAnchored = true;
+        }
+
+        public bool IsAnchored()
+        {
+            return isAnchored;
         }
     }
 }

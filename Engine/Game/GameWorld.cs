@@ -34,6 +34,8 @@ namespace Merlin2d.Game
         private IPhysics gameLevelPhysics;
         private Func<IWorld, MapStatus> endCondition = null;
 
+        private bool isCameraFollowStyleDefined = false;
+
 
         //private Camera2D camera;
 
@@ -55,6 +57,7 @@ namespace Merlin2d.Game
 
         internal void Initialize()
         {
+            isLoaded = true;
             if (mapResource != null)
             {
                 LoadMap();
@@ -69,8 +72,7 @@ namespace Merlin2d.Game
                     AddActors();
                 }
             });
-            initActions.Clear();
-            isLoaded = true;
+            initActions.Clear();      
         }
 
         public void SetMap(string resource)
@@ -82,9 +84,11 @@ namespace Merlin2d.Game
         {
             this.actors.Clear();
             tiledMap = new Map(this.mapResource);
+            width = tiledMap.Width * tiledMap.TileWidth;
+            height = tiledMap.Height * tiledMap.TileHeight;
             if (actors.Count != 0)
             {
-                Console.WriteLine("Manually added actors removed, use AddInitAction to manually add actors for debug.");
+                Console.WriteLine("Manually added actors were removed, use AddInitAction to manually add actors for debug.");
             }
             actors.Clear();
             actorsToAdd.Clear();
@@ -124,6 +128,10 @@ namespace Merlin2d.Game
 
         public void CenterOn(IActor actor)
         {
+            if (!isCameraFollowStyleDefined)
+            {
+                Console.WriteLine("Warning - camera follow style is not set in the GameContainer - use SetCameraFollowStyle first.");
+            }
             this.centeredOn = actor;
         }
 
@@ -263,13 +271,14 @@ namespace Merlin2d.Game
 
             RenderActors(this.actors);
             RenderActors(this.triggers);
+            RenderMessages(true);
 
         }
 
         internal void RenderOverlay(GameContainer gc)
         {
             RenderInventory(gc);
-            RenderMessages();
+            RenderMessages(false);
         }
 
         private void RenderMap()
@@ -345,9 +354,9 @@ namespace Merlin2d.Game
             }
         }
 
-        private void RenderMessages()
+        private void RenderMessages(bool isAnchored)
         {
-            messages.ForEach(message =>
+            messages.Where(x => x.IsAnchored() == isAnchored).ToList().ForEach(message =>
             {
                 Raylib.DrawText(message.GetText(), message.GetX(), message.GetY(),
                                 message.GetFontSize(), message.GetColor());
@@ -387,6 +396,22 @@ namespace Merlin2d.Game
         public void SetEndCondition(Func<IWorld, MapStatus> condition)
         {
             endCondition = condition;
+        }
+
+        internal int GetWidth()
+        {
+            return width;
+        }
+
+        internal int GetHeight()
+        {
+            return height;
+        }
+
+        internal void UpdateCameraFollowStyle(bool isSet)
+        {
+
+            isCameraFollowStyleDefined = isSet;
         }
     }
 }

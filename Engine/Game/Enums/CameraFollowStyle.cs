@@ -6,5 +6,9 @@ namespace Merlin2d.Game.Enums
 {
     public enum CameraFollowStyle
     {
+        None,
+        Centered,
+        CenteredInsideMapPreferBottom,
+        CenteredInsideMapPreferTop
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Merlin2d.Game.Actors;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,5 +18,7 @@ namespace Merlin2d.Game
 
         public int GetFontSize();
         public int RemainingTime();
+        public bool IsAnchored();
+        public void SetAnchorPoint(IActor actor);
     }
 }

@@ -17,6 +17,7 @@ namespace MerlinGame.Actors
         private Animation animation1;
         private Animation animation2;
         private Command move;
+        private Message healthMsg;
 
         public DummyActor()
         {
@@ -39,12 +40,33 @@ namespace MerlinGame.Actors
             //    this.RemoveFromWorld();
             //}
 
-            if (Input.GetInstance().IsKeyPressed(Input.Key.A))
+            //if (Input.GetInstance().IsKeyPressed(Input.Key.A))
             {
-                SetAnimation(animation1);
-                GetWorld().AddMessage(new Message("aaa", 100, 100, 20, Color.Blue, MessageDuration.Short));
-                move.Execute();
+                //SetAnimation(animation1);
+                //GetWorld().AddMessage(new Message("aaa", 100, 100, 20, Color.Blue, MessageDuration.Short));
+                //move.Execute();
+                this.SetPosition(GetX() - 1, GetY() - 1);
+                ShowMessage();
             }
+        }
+
+        private void ShowMessage()
+        {
+            if (GetWorld() != null)
+            {
+                if (healthMsg != null)
+                {
+                    GetWorld().RemoveMessage(healthMsg);
+                }
+                healthMsg = new Message(GetHealth().ToString(), -26, -10, 10, new Color(255, 0, 0), MessageDuration.Indefinite);
+                healthMsg.SetAnchorPoint(this);
+                GetWorld().AddMessage(healthMsg);
+            }
+        }
+
+        private int GetHealth()
+        {
+            return 100;
         }
 
         //public override void Update()

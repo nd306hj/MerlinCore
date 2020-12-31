@@ -1,5 +1,6 @@
 ﻿using Merlin2d.Game.Actions;
 using Merlin2d.Game.Actors;
+using Merlin2d.Game.Camera;
 using Merlin2d.Game.Enums;
 using Merlin2d.Game.Items;
 using Raylib_cs;
@@ -28,6 +29,8 @@ namespace Merlin2d.Game
         private IMessage failMessage;
 
         private bool disposedValue;
+        ICameraUpdater cameraUpdater;
+        bool isCameraUpdaterSet = false;
 
 
         public GameContainer(string title, int width, int height) : this(title, width, height, false)
@@ -50,6 +53,7 @@ namespace Merlin2d.Game
             }
             camera = new Camera2D();
             Input.GetInstance();
+            cameraUpdater = new CameraUpdaterNone(width, height);
         }
 
         /// <summary>
@@ -102,13 +106,21 @@ namespace Merlin2d.Game
             cameraZoomLevel = zoomLevel;
         }
 
+        private void InitializeWorld(GameWorld world)
+        {
+            world.Initialize();
+            world.UpdateCameraFollowStyle(isCameraUpdaterSet);
+        }
+
         public void Run()
         {
+
             camera.zoom = cameraZoomLevel;
             //gameWorld.SetCamera(camera);
             currentWorldIndex = 0;
             currentWorld = gameWorlds[currentWorldIndex];
-            currentWorld.Initialize();
+            InitializeWorld(currentWorld);
+
             bool isRunning = true;
             MapStatus status = MapStatus.Unfinished;
 
@@ -125,7 +137,7 @@ namespace Merlin2d.Game
                     if (currentWorldIndex < gameWorlds.Count - 1)
                     {
                         currentWorld = gameWorlds[++currentWorldIndex];
-                        currentWorld.Initialize();
+                        InitializeWorld(currentWorld);
                     }
                     else
                     {
@@ -143,15 +155,15 @@ namespace Merlin2d.Game
 
         private MapStatus Run(GameWorld gameWorld)
         {
-
             var status = gameWorld.Update();
 
             IActor centered = gameWorld.GetCenteredActor();
             if (centered != null)
             {
-                camera.offset = new Vector2(width / 2, height / 2);
-                camera.target = new Vector2(centered.GetX(), centered.GetY());
-                //graphics.translate(getXOffset(gc), getYOffset(gc));
+                //camera.offset = new Vector2(width / 2, height / 2);
+                //camera.target = new Vector2(centered.GetX(), centered.GetY());
+
+                cameraUpdater.UpdateCamera(ref camera, centered, gameWorld.GetWidth(), gameWorld.GetHeight());
             }
 
             Raylib.BeginDrawing();
@@ -249,6 +261,29 @@ namespace Merlin2d.Game
         {
             CheckMapMode(true);
             return gameWorlds.Count;
+        }
+
+        public void SetCameraFollowStyle(CameraFollowStyle style)
+        {
+            switch (style)
+            {
+                case CameraFollowStyle.None:
+                    cameraUpdater = new CameraUpdaterNone(width, height);
+                    break;
+                case CameraFollowStyle.Centered:
+                    cameraUpdater = new CameraUpdaterCentered(width, height);
+                    break;
+                case CameraFollowStyle.CenteredInsideMapPreferBottom:
+                    cameraUpdater = new CameraUpdaterCenterInsideMap(GetWidth(), GetHeight());
+                    break;
+                case CameraFollowStyle.CenteredInsideMapPreferTop:
+                    cameraUpdater = new CameraUpdaterCenterInsideMapTop(GetWidth(), GetHeight());
+                    break;
+                default:
+                    break;
+            }
+
+            isCameraUpdaterSet = style != CameraFollowStyle.None;
         }
 
 
