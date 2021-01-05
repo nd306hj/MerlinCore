@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="50" height="37" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="3">
+ <tileset firstgid="1" name="tileset_basic" tilewidth="16" tileheight="16" tilecount="960" columns="32">
+  <image source="tilesets/tileset_basic.png" width="512" height="480"/>
+ </tileset>
+ <layer id="4" name="background" width="50" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACtWYy1ITQRSG51IqG+IFSveiyCaIQIUHAC2eIDyByIvozir1HVALVvoOVlKhvIv6AhRsuCmoS087cyp//pzumZBQ6uKv6bmlz9f/6dM9eZ1E0Zv/WG9F70S7oj3R/j+mvYD42QPRcBp+52+pkmYq8+w++DFoTzSOIvXTL8ZdNX7zfFosX/8h/8sq1Oce9IMxfxR9yvOrQs+XyU3sZ9Dx+vrXo47/lOi7nB/lvkymnfPFypOieDmmUMzW9aIcVB9c7N+STI5hRM5H04xFvamm5TzoZ8xP6qHKxX8pzeQYZkSzOcsHYEEP2VNmK+NBUa6UmZOqqbTNoBzTwKIeHQXiVl99Y1o2R0I1lceP76kXI8ChcU/DtVGoA1gTsEb48rusB1xvQkfmQB+cVuPsqD6gN1ZfOI7sCXNX8roxaN1MO5lexZlmgMNp1oiJvWBGzHGsJ2PSvpb0fkSNGe1q2s3hPEGPfHGzFxg/rjvMsCCa7/GImjfayuL6fCbxP4/bPL71wmLg9b8SYKj1qTlqM0tDYm8aHFyfcP3DecHP+xjqFIeqboifwWd9LNvA4LSbhOsd+sDz2sntna9CDtc8sZ3EDx+L9rVlcPhqPa8T7MeF3Av97brR95LHB5/wPXx3yfAFOXjuMoe1NrBHzhc37zQOZqlBLKg54xq+Y91HFuQo+91irSPK7jiacWf82K7RdY5br6EfekSv9J3NKIo+R+26NZzH0+t6hHVXOdSPMlqCo8VRIw5su+eOheFH1K5bk3m9aUa2GtSuEot6hRzqvVV/fDzctvISf0v9cDm1E7fj3PFo22i753ldcfO9GXfnTC/idy1v9J76sUUMa3K+XkLKgr4cwPh8EX2Nis9dDD+jbs/Kznn9PYtho4SQpZnzOC+OIbZfosfS15PEf35ZfudKbNeiOYODrysHMrQgxpBaxNIAFh1n7feF6GXiPw/lPq+fyFAnjtuiOz164bQWt99BX5RD+3mfZN+ZfB6K3ZozVp3A+XFXtBx1xjUk95dF90Tj0HbX1beWwdLItQl+HCbZd4H2q3nF+w6Ml+svr5XIoX7cFz2g+e3ifZh0/of6SDSRdOafxaLeaIwX0+y7wMorax+l8Vq1GO8xx6roKeWVi1f3W4f58QD8WAdPmEXHRfu5lWbfmVZe1Q0GXuesNRzXJs0ry4/FJFvfdSxH8lo0QRwbxOPO50ULsf/7QfPMuocx8v7F4ijyYwXGUb/X3Vq/mLTHHjmwFv8Zh7izb2xjnll7L8sHi4HzCue5xuE4rHnurmMeMZNqJe7Ofx1zzLPQnitUr5DXyquyKmJZ9HCcRBYXMnFeYZ73I/UjNN79iJnUjzMD1FnROdFQvoactnCfdn2AGhfdEE1E2TidtnAf9xuTUEuw6BwAAA==
+  </data>
+ </layer>
+ <objectgroup id="6" name="objects">
+  <object id="1" name="Enemy" type="Enemy" x="146.286" y="415.553" width="33" height="47"/>
+  <object id="2" name="Player" type="Player" x="244.908" y="296.348" width="27" height="47"/>
+ </objectgroup>
+ <layer id="5" name="walls" width="50" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2XCw6DIAyGzTwn7iTTk+xxkT0utmSQ2aQ2QoZtwZL9SQMKIl8K8uv6rht8nOZwzOCMk/Ms7gfzH0nJDc44uc8CxziHVdF8WNWfY19qgQMYjogD37Mgh+Y+RTgssGCGIcIx7ZwDz5XuD2dobeFcrHHgdiuK+RJJBniHdJniuPi4CjOseTduSVk0zw+nNG4QZdHi0GQAYRYNDlibJfwBZrHMEQRz11hXpf1aCz4xqGUO8Ca/BD2PainmS3L/72sLc2z55r8P36AsZ+QNbv3yOlWX4Ni6R9ZY7r7+8PH08eqX16m6BAdnn1OW0utN8nuFWSxzBAFLC+dgbO9rKvVvwlHgsJ6PGtLKR2m1mg/YoxJRgwPyYZUD5g8+R5Ij11+l+sXaaB/wOZIcuf4q1S/WRvt8AOX7cFroHAAA
+  </data>
+ </layer>
+</map>

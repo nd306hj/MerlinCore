@@ -45,8 +45,9 @@ namespace MerlinGame.Actors
                 //SetAnimation(animation1);
                 //GetWorld().AddMessage(new Message("aaa", 100, 100, 20, Color.Blue, MessageDuration.Short));
                 //move.Execute();
-                this.SetPosition(GetX() - 1, GetY() - 1);
+                this.SetPosition(GetX() + 1, GetY() + 1);
                 ShowMessage();
+                this.GetWorld().IntersectWithWall(this);
             }
         }
 

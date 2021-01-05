@@ -68,7 +68,9 @@ namespace Merlin2d.Game
                 a(this);
                 if (actorsToAdd.Count != 0)
                 {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Actors added within initialization - acceptable for debug only, put them into .tmx object layer for the final submission!");
+                    Console.ResetColor();
                     AddActors();
                 }
             });
@@ -86,9 +88,11 @@ namespace Merlin2d.Game
             tiledMap = new Map(this.mapResource);
             width = tiledMap.Width * tiledMap.TileWidth;
             height = tiledMap.Height * tiledMap.TileHeight;
-            if (actors.Count != 0)
+            if (actors.Count != 0 || actorsToAdd.Count != 0)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Manually added actors were removed, use AddInitAction to manually add actors for debug.");
+                Console.ResetColor();
             }
             actors.Clear();
             actorsToAdd.Clear();
@@ -130,7 +134,9 @@ namespace Merlin2d.Game
         {
             if (!isCameraFollowStyleDefined)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Warning - camera follow style is not set in the GameContainer - use SetCameraFollowStyle first.");
+                Console.ResetColor();
             }
             this.centeredOn = actor;
         }
@@ -174,7 +180,7 @@ namespace Merlin2d.Game
                     }
                 }
             }
-            return false;
+             return false;
         }
 
         public void AddActor(IActor actor)

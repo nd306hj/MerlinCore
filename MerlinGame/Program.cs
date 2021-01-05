@@ -41,7 +41,7 @@ namespace MerlinGame
             container.GetWorld(0).AddInitAction(w =>
             {
                 IActor actor = new DummyActor();
-                actor.SetPosition(300, 500);
+                actor.SetPosition(300, 400);
                 w.AddActor(actor);
 
                 w.CenterOn(actor);

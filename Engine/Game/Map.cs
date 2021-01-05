@@ -1,4 +1,5 @@
 ﻿using Merlin2d.Game.Actors;
+using Merlin2d.Game.Exceptions;
 using Raylib_cs;
 using System;
 using System.Collections.Generic;
@@ -115,11 +116,19 @@ namespace Merlin2d.Game
 
         public bool IsWall(int x, int y)
         {
+            if (x >= Width || x < 0 || y >= Height || y < 0)
+            {
+                throw new GameException("Tile coordinates out of map bounds.");
+            }
             return walls[x, y] != 0;
         }
 
         public void SetWall(int x, int y, bool wall)
         {
+            if (x > Width || x < 0 || y > Height || y < 0)
+            {
+                throw new GameException("Tile coordinates out of map bounds.");
+            }
             walls[x, y] = wall ? 1 : 0;
         }
 
