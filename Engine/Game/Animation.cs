@@ -1,4 +1,5 @@
-﻿using Merlin2d.Game.Exceptions;
+﻿using Merlin2d.Game.Enums;
+using Merlin2d.Game.Exceptions;
 using Raylib_cs;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,8 @@ namespace Merlin2d.Game
         private bool renderSmall = true;
 
         private static int objectCount = 0;
+
+        private AnimationLayer layer = AnimationLayer.Background;
 
         //private static readonly float inventorySize = 16.0f;
 
@@ -249,6 +252,16 @@ namespace Merlin2d.Game
                 frames[i].width = -frames[i].width;
             }
 
+        }
+
+        public void SetAnimationLayer(AnimationLayer layer)
+        {
+            this.layer = layer;
+        }
+
+        public AnimationLayer GetAnimationLayer()
+        {
+            return layer;
         }
     }
 }

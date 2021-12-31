@@ -46,6 +46,7 @@ namespace Merlin2d.Game
         private static readonly int itemSize = 32;
 
         private List<Action<IWorld>> initActions = new List<Action<IWorld>>();
+        private bool isLayeredRenderingEnabled;
 
         public GameWorld(int width, int height)
         {
@@ -57,6 +58,14 @@ namespace Merlin2d.Game
 
         internal void Initialize()
         {
+
+            if (!isCameraFollowStyleDefined)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Warning - camera follow style is not set in the GameContainer - use SetCameraFollowStyle first.");
+                Console.ResetColor();
+            }
+
             isLoaded = true;
             if (mapResource != null)
             {
@@ -132,12 +141,6 @@ namespace Merlin2d.Game
 
         public void CenterOn(IActor actor)
         {
-            if (!isCameraFollowStyleDefined)
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Warning - camera follow style is not set in the GameContainer - use SetCameraFollowStyle first.");
-                Console.ResetColor();
-            }
             this.centeredOn = actor;
         }
 
@@ -313,7 +316,14 @@ namespace Merlin2d.Game
 
         private void RenderActors(List<IActor> listOfActors)
         {
-            foreach (IActor actor in listOfActors)
+
+            IEnumerable<IActor> actors = listOfActors;
+            if (isLayeredRenderingEnabled)
+            {
+                actors = actors.OrderByDescending(x => x.GetAnimation().GetAnimationLayer());
+            }
+
+            foreach (IActor actor in actors)
             {
                 Animation animation = actor.GetAnimation();
                 if (animation != null)
@@ -418,6 +428,11 @@ namespace Merlin2d.Game
         {
 
             isCameraFollowStyleDefined = isSet;
+        }
+
+        public void EnableLayeredRendering()
+        {
+            this.isLayeredRenderingEnabled = true;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Merlin2d.Game
 {
-    public interface IPhysics : Command
+    public interface IPhysics : ICommand
     {
         void SetWorld(IWorld world);
     }

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Merlin2d</AssemblyName>
     <RootNamespace>Merlin2d</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -10,12 +10,12 @@
     <Company>TUKE</Company>
     <Description>Core classes of project.merlin ported into C#</Description>
     <SignAssembly>false</SignAssembly>
-    <AssemblyVersion>2.4.4.0</AssemblyVersion>
-    <FileVersion>2.4.3.0</FileVersion>
-    <Version>2.4.4</Version>
+    <AssemblyVersion>2.5.2.0</AssemblyVersion>
+    <FileVersion>2.5.2.0</FileVersion>
+    <Version>2.5.2</Version>
     <PackageId>MerlinCore</PackageId>
     <NeutralLanguage>en-150</NeutralLanguage>
-    <PackageProjectUrl>https://gitlab.cit.fei.tuke.sk/lh751fz/pvjcs20/-/wikis/home</PackageProjectUrl>
+    <PackageProjectUrl>https://gitlab.cit.fei.tuke.sk/lh751fz/pvjcs21/-/wikis/home</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

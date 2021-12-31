@@ -33,5 +33,6 @@ namespace Merlin2d.Game
         void SetPhysics(IPhysics physics);
 
         void SetEndCondition(Func<IWorld, MapStatus> condition);
+        void EnableLayeredRendering();
     }
 }

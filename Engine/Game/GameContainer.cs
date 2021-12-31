@@ -108,8 +108,8 @@ namespace Merlin2d.Game
 
         private void InitializeWorld(GameWorld world)
         {
-            world.Initialize();
             world.UpdateCameraFollowStyle(isCameraUpdaterSet);
+            world.Initialize();
         }
 
         public void Run()
@@ -194,16 +194,19 @@ namespace Merlin2d.Game
         /// Sets message to be displayed at the end of the game.
         /// </summary>
         /// <param name="message">Message to be displayed</param>
-        /// <param name="hasWon">Indicates whether it is a failure or win message</param>
-        public void SetEndGameMessage(IMessage message, bool hasWon)
+        /// <param name="mapStatus">Indicates whether it is a failure or win message</param>
+        public void SetEndGameMessage(IMessage message, MapStatus mapStatus)
         {
-            if (hasWon)
+            switch (mapStatus)
             {
-                winMessage = message;
-            }
-            else
-            {
-                failMessage = message;
+                case MapStatus.Unfinished:
+                    throw new ArgumentException("End game message is only valid for finished / failed map status!");
+                case MapStatus.Failed:
+                    failMessage = message;
+                    break;
+                case MapStatus.Finished:
+                    winMessage = message;
+                    break;
             }
         }
 
