@@ -16,7 +16,15 @@ namespace Merlin2d.Game.Actors
             Name = tmxObject.Name;
             X = (int)tmxObject.X;
             Y = (int)tmxObject.Y;
-            Type = tmxObject.Type;
+            if (tmxObject.Properties.ContainsKey("Class"))
+            {
+                Type = tmxObject.Properties["Class"];
+            }
+            else
+            {
+                Type = tmxObject.Type;
+            }
+
         }
 
         public static implicit operator ActorData(TmxObject tmxObject)

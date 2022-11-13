@@ -320,7 +320,7 @@ namespace Merlin2d.Game
             IEnumerable<IActor> actors = listOfActors;
             if (isLayeredRenderingEnabled)
             {
-                actors = actors.OrderByDescending(x => x.GetAnimation().GetAnimationLayer());
+                actors = actors.OrderBy(x => x.GetAnimation().GetAnimationLayer());
             }
 
             foreach (IActor actor in actors)

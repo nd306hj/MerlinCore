@@ -15,7 +15,7 @@ namespace MerlinGame
         static void Main(string[] args)
         {
             GameContainer container = new GameContainer("Remorseless winter", 2000, 1300);
-            //container.GetWorld().SetFactory(new ActorFactory());
+            container.GetWorld().SetFactory(new ActorFactory());
             //int index = container.AddWorld("resources/maps/demo1.tmx");
 
             //IActor actor = new DummyActor();
@@ -26,7 +26,7 @@ namespace MerlinGame
             //container.AddActor(actor);
             //container.GetWorld(index).SetPhysics(new Gravity());
 
-            container.SetMap("resources/maps/basicTest.tmx");
+            container.SetMap("resources/maps/map01.tmx");
             container.GetWorld().EnableLayeredRendering();
             //container.AddWorld("resources/maps/basicTest.tmx");
             //container.GetWorld().SetFactory(new ActorFactory());
@@ -48,6 +48,11 @@ namespace MerlinGame
                 w.AddActor(actor);
 
                 w.CenterOn(actor);
+
+                actor = new DummyActor();
+                actor.SetPosition(350, 450);
+                actor.GetAnimation().SetAnimationLayer(AnimationLayer.High);
+                w.AddActor(actor);
             });
 
             container.GetWorld().SetEndCondition(world =>

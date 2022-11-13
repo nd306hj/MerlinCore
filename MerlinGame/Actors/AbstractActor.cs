@@ -64,19 +64,19 @@ namespace MerlinGame.Actors
             this.animation = animation;
         }
 
-        //public virtual bool Intersects(IActor other)
-        //{
-        //    if ((posX < actor.GetX() - GetWidth()) || (posX > actor.GetX() + actor.GetWidth()))
-        //    {
-        //        return false;
-        //    }
+        public virtual bool Intersects(IActor actor)
+        {
+            if ((posX < actor.GetX() - GetWidth()) || (posX > actor.GetX() + actor.GetWidth()))
+            {
+                return false;
+            }
 
-        //    if ((posY < actor.GetY() - GetHeight()) || (posY > actor.GetY() + actor.GetHeight()))
-        //    {
-        //        return false;
-        //    }
-        //    return true;
-        //}
+            if ((posY < actor.GetY() - GetHeight()) || (posY > actor.GetY() + actor.GetHeight()))
+            {
+                return false;
+            }
+            return true;
+        }
 
         public void OnAddedToWorld(IWorld world)
         {
