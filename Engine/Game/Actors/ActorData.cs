@@ -20,6 +20,10 @@ namespace Merlin2d.Game.Actors
             {
                 Type = tmxObject.Properties["Class"];
             }
+            else if (tmxObject.Properties.ContainsKey("Type"))
+            {
+                Type = tmxObject.Properties["Type"];
+            }
             else
             {
                 Type = tmxObject.Type;

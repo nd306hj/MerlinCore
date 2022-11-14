@@ -26,7 +26,7 @@ namespace MerlinGame
             //container.AddActor(actor);
             //container.GetWorld(index).SetPhysics(new Gravity());
 
-            container.SetMap("resources/maps/map01.tmx");
+            container.SetMap("Resources/maps/map01.tmx");
             container.GetWorld().EnableLayeredRendering();
             //container.AddWorld("resources/maps/basicTest.tmx");
             //container.GetWorld().SetFactory(new ActorFactory());
